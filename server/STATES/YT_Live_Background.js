@@ -13,7 +13,7 @@ async function wStart() {
 			var current_state = await RU.getKey( R_STATE );
 			var live_vids = await require( "../youtubeManager.js" ).updateLive();
 			//console.log( live_vids );
-			await require( "../../main.js" ).setStagedFFClientTask( { message: "YTLiveBackground" , playlist: live_vids , nextVideoTime: 180000 } );
+			await require( "../utils/generic.js" ).setStagedFFClientTask( { message: "YTLiveBackground" , playlist: live_vids , nextVideoTime: 180000 } );
 			await require( "../firefoxManager.js" ).openURL( "http://localhost:6969/youtubeLiveBackground" );
 			await RU.setMulti( [ [ "set" , R_STATE , R_STATE_NAME ] , [ "set" , R_PREVIOUS , current_state ] ] );
 			resolve();

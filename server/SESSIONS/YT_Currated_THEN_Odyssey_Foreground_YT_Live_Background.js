@@ -25,7 +25,7 @@ function RESTART_IN_YOU_TUBE_LIVE_MODE(){
 function TRY_FOR_NEXT_VIDEO() {
 	return new Promise( async function( resolve , reject ) {
 		try {
-			var next_video = await RU.popRandomFromSet( RC.CURRATED.MAIN_LIST );
+			var next_video = await RU.popRandomFromSet( RC.CURRATED.QUE );
 			if ( next_video ) {
 				resolve( next_video );
 				return;
@@ -45,7 +45,7 @@ function wStart() {
 			var next_video = await TRY_FOR_NEXT_VIDEO();
 			if ( next_video === "null" ) { await RESTART_IN_YOU_TUBE_LIVE_MODE(); }
 			else {
-				await require( "../../main.js" ).setStagedFFClientTask( { message: "YTStandardForeground" , playlist: [ next_video ]  } );
+				await require( "../utils/generic.js" ).setStagedFFClientTask( { message: "YTStandardForeground" , playlist: [ next_video ]  } );
 				await require( "../firefoxManager.js" ).openURL( "http://localhost:6969/youtubeStandard" );
 				await RU.setMulti( [ 
 					[ "sadd" , RC.ALREADY_WATCHED , next_video ] ,
