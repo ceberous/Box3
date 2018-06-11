@@ -8,6 +8,9 @@ const decoder = new StringDecoder('utf8');
 const spawn = require("child_process").spawn;
 require("shelljs/global");
 
+const RU = require( "./utils/redis_Utils.js" );
+const RC = require( "./CONSTANTS/redis.js" ).BUTTONS;
+
 function wcl( wSTR ) { console.log( colors.yellow.bgBlack( "[BUTTON_MAN] --> " + wSTR ) ); }
 
 // https://blog.petrockblock.com/controlblock/
@@ -109,6 +112,7 @@ cleanseButtonENV();
 const buttonScript = path.join( __dirname , "py_scripts" , "buttonWatcher.py" );
 var ButtonManager = spawn( "python" , [ buttonScript ] );
 wcl( "@@PID=" + ButtonManager.pid );
+await RU.setKey( RC.STATUS , "ONLINE" );
 
 var lastPressed = new Date().getTime();
 var timeNow;
@@ -127,6 +131,13 @@ var handleButtonInput = function(wInput) {
 	console.log( "did we just call button press master ?" );
 };
 
+async function stopScript() {
+	var wCMD = "sudo kill -9 " + ButtonManager.pid.toString();
+	exec( wCMD , { silent: true , async: false } );
+	await RU.setKey( RC.STATUS , "OFFLINE" );
+}
+module.exports.stop = stopScript;
+
 ButtonManager.stdout.on( "data" , function( data ) {
 	var message = decoder.write( data );
 	message = message.trim();
@@ -139,15 +150,13 @@ ButtonManager.stderr.on( "data" , function(data) {
 	message = message.trim();
 	wcl( "[buttonWatcher.py] --> ERROR -->".green  );
 	wcl( message );
+	stopScript();
 	//wEmitter.emit( "properShutdown" );
 	//setTimeout( ()=> { process.exit(1); } , 2000 );
 });
 
 
-module.exports.stop = function() {
-	var wCMD = "sudo kill -9 " + ButtonManager.pid.toString();
-	exec( wCMD , { silent: true , async: false } );
-};
+
 
 module.exports.pressButton = function( wNum ) {
 	handleButtonInput( wNum );

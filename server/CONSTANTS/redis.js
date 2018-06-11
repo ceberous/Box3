@@ -135,6 +135,11 @@ module.exports.MOPIDY = {
 	STATUS: "STATUS.MOPIDY" ,
 };
 
+module.exports.BUTTONS = {
+	BASE: "BUTTONS." ,
+	STATUS: "STATUS.USB_BUTTONS" ,
+};
+
 module.exports.STATUS = [
 	"STATUS.USB_BUTTONS" ,
 	"STATUS.LOCAL_MEDIA" ,
