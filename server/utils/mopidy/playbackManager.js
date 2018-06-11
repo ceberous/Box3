@@ -112,7 +112,9 @@ function GET_STATE() {
 	return new Promise( function( resolve , reject ) {
 		try {
 			mopidy.playback.getState().then( async function ( state ) {
-				state = state.toUpperCase();
+				if ( !state ) { state = "UNKNOWN"; }
+				if ( state.length < 3 ) { state = "UNKNOWN"; }
+				else { state = state.toUpperCase(); }
 				console.log( "STATE = " + state );
 				await RU.setKey( RC.STATE , state );
 				resolve( state );
