@@ -74,8 +74,7 @@ module.exports.getStagedFFClientTask = GET_STAGED_FF_CLIENT_TASK;
 function GET_STATUS_REPORT() {
 	return new Promise( async function( resolve , reject ) {
 		try {
-			const x1 = StatusKeys.join( " , " );
-			const wStatusReport = await require( "./redis_Utils.js" ).getMultiKeys( x1 );
+			const wStatusReport = await require( "./redis_Utils.js" ).getMultiKeys( ...StatusKeys );
 			console.log( "\n\nSTATUS REPORT ====\n" );
 			console.log( wStatusReport )
 			resolve( wStatusReport );
