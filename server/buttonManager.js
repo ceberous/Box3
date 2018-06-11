@@ -112,7 +112,6 @@ cleanseButtonENV();
 const buttonScript = path.join( __dirname , "py_scripts" , "buttonWatcher.py" );
 var ButtonManager = spawn( "python" , [ buttonScript ] );
 wcl( "@@PID=" + ButtonManager.pid );
-await RU.setKey( RC.STATUS , "ONLINE" );
 
 var lastPressed = new Date().getTime();
 var timeNow;
@@ -155,9 +154,9 @@ ButtonManager.stderr.on( "data" , function(data) {
 	//setTimeout( ()=> { process.exit(1); } , 2000 );
 });
 
-
-
-
 module.exports.pressButton = function( wNum ) {
 	handleButtonInput( wNum );
 };
+
+
+RU.setKey( RC.STATUS , "ONLINE" );
