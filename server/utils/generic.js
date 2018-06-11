@@ -19,7 +19,7 @@ function GET_NOW_TIME() {
 	var minutes = today.getMinutes();
 	if ( parseInt( minutes ) < 10 ) { minutes = "0" + minutes; }	
 	
-	return day + month + year + " @@ " + hours + ":" + minutes;
+	return day + month + year + " @ " + hours + ":" + minutes;
 }
 module.exports.time = GET_NOW_TIME;
 
@@ -74,8 +74,8 @@ module.exports.getStagedFFClientTask = GET_STAGED_FF_CLIENT_TASK;
 function GET_STATUS_REPORT() {
 	return new Promise( async function( resolve , reject ) {
 		try {
-			//console.log( StatusKeys.join( "," ) );
-			var wStatusReport = await require( "./redis_Utils.js" ).getMultiKeys( StatusKeys.join( "," ) );
+			const x1 = StatusKeys.join( " , " );
+			const wStatusReport = await require( "./redis_Utils.js" ).getMultiKeys( x1 );
 			console.log( "\n\nSTATUS REPORT ====\n" );
 			console.log( wStatusReport )
 			resolve( wStatusReport );
