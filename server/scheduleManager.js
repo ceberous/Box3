@@ -33,7 +33,9 @@ var ACTIVE_SCHEDULES = [];
 								if ( answers[ i ] !== STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] ) {
 									AllConditionsMet = false;
 									wcl( "condition not met !!!" );
-									wcl( answers[ i ] + " !== " + STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] );						
+									const s1 = answers[ i ] + " !== " + STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ];
+									wcl( s1 );
+									await require( "./discordManager.js" ).log( s1 );
 								}
 							}
 						}
@@ -41,9 +43,13 @@ var ACTIVE_SCHEDULES = [];
 				}
 				if ( AllConditionsMet ) {
 					wcl( "starting scheduled job" );
+					await require( "./discordManager.js" ).log( "starting scheduled job --> " + job );
 					wButtonMaster( STATE_TRANSITIONS[ job ][ "state" ] , STATE_TRANSITIONS[ job ][ "stateOptions" ] );
 				}
-				else { wcl( "condition not met for scheduled task" ); }
+				else {
+					wcl( "conditions not met for scheduled task" );
+					await require( "./discordManager.js" ).log( "conditions not met for --> " + job );
+				}
 			})});
 		}
 
@@ -60,7 +66,9 @@ var ACTIVE_SCHEDULES = [];
 								if ( answers[ i ] !== STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] ) {
 									AllConditionsMet = false;
 									wcl( "condition not met !!!" );
-									wcl( answers[ i ] + " !== " + STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] );
+									const s2 = answers[ i ] + " !== " + STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ];
+									wcl( s2 );
+									await require( "./discordManager.js" ).log( s2 );
 								}
 							}
 						}
@@ -69,7 +77,10 @@ var ACTIVE_SCHEDULES = [];
 				if ( AllConditionsMet ) {
 					wButtonMaster( 6 );
 				}
-				else { wcl( "condition not met for scheduled task" ); }
+				else { 
+					wcl( "conditions not met for scheduled task" );
+					await require( "./discordManager.js" ).log( "conditions not met for --> " + job );
+				}
 			})});
 		}
 	}
@@ -92,7 +103,9 @@ var ACTIVE_SCHEDULES = [];
 								if ( answers[ i ] !== UPDATE_JOBS[ job ][ "startConditions" ][ wConditions[ i ] ] ) {
 									AllConditionsMet = false;
 									console.log( "condition not met !!!" );
-									console.log( answers[ i ] + " !== " + UPDATE_JOBS[ job ][ "startConditions" ][ wConditions[ i ] ] );
+									const s3 = answers[ i ] + " !== " + UPDATE_JOBS[ job ][ "startConditions" ][ wConditions[ i ] ];
+									wcl( s3 );
+									await require( "./discordManager.js" ).log( s3 );
 								}
 							}
 						}
@@ -111,7 +124,10 @@ var ACTIVE_SCHEDULES = [];
 						require( B_PATH )();
 					}
 				}
-				else { wcl( "condition not met for scheduled task" ); }
+				else {
+					wcl( "condition not met for scheduled task" );
+					await require( "./discordManager.js" ).log( "conditions not met for --> " + job );
+				}
 			})});
 		}
 	}

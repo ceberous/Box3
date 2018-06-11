@@ -34,7 +34,7 @@ function INITIALIZE() {
 				}
 				else { wcl( "WE WERE TOLD TO QUIT" ); }
 			});
-
+			await RU.setKey( RC.STATUS , "ONLINE" );
 			resolve();
 		}
 		catch( error ) { console.log( error ); reject( error ); }
