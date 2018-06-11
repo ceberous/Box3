@@ -4,7 +4,7 @@ const mopidy = require( "../../mopidyManager.js" ).mopidy;
 function sleep( ms ) { return new Promise( resolve => setTimeout( resolve , ms ) ); }
 
 const R_BASE = "MOPIDY.";
-
+const testing = "blah";
 
 function STOP() {
 	return new Promise( function( resolve , reject ) {
