@@ -124,6 +124,7 @@ module.exports.LOCAL_MEDIA = {
 
 module.exports.MOPIDY = {
 	BASE: "MOPIDY." ,
+	STATE: "MOPIDY.STATE" ,
 	STATUS: "MOPIDY.STATUS" ,
 };
 
