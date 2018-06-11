@@ -20,7 +20,6 @@
       "user" : "node",
       "ref"  : "origin/master",
       "repo" : "git@github.com:ceberous/Box3.git",
-      "path" : "/var/www/production",
       "ssh_options": "StrictHostKeyChecking=no",
       "post-setup": "ls -la",
       "pre-deploy-local" : "echo 'This is a local executed command'" ,
