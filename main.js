@@ -52,6 +52,7 @@ function SEND_STAGED_WS_MESSAGE() {
 	wcl( "starting" );
 
 	require( "./config/writer.js" );
+	await require( "./server/utils/generic.js" ).wSleep( 500 );	
 	await require( "./server/utils/redisManager.js" ).loadRedis();
 	wcl( "LOADED Redis-Client" );
 	await require( "./server/utils/generic.js" ).wSleep( 2000 );

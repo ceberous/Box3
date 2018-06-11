@@ -152,9 +152,10 @@ function UPDATE_HAND_WRITTEN_CONFIG() {
 }
 module.exports.updateHandWrittenConfig  = UPDATE_HAND_WRITTEN_CONFIG;
 
-if ( !module.parent ) {
-	UPDATE_HAND_WRITTEN_CONFIG();
-}
+// if ( !module.parent ) {
+// 	UPDATE_HAND_WRITTEN_CONFIG();
+// }
+UPDATE_HAND_WRITTEN_CONFIG();
 
 function GET_CONFIG_FILE( wConfigName ) {
 	if ( !CONFIG_FILE_VAR_MAP[ wConfigName ] ) { return "No Config File By That Name"; }
