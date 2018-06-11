@@ -56,7 +56,7 @@ const SCHEDULES = {
 
 	STATE_TRANSITIONS: {
 		arriveHome: {
-			startPattern: "01 16 * * 1,2,3,5" ,
+			startPattern: "09 16 * * 1,2,3,5" ,
 			endPattern: "01 18 * * 1,2,3,5" ,
 			state: 13,
 			stateOptions: null ,

@@ -27,7 +27,9 @@ var ACTIVE_SCHEDULES = [];
 				if ( STATE_TRANSITIONS[ job ][ "startConditions" ] ) {
 					if ( Object.keys( STATE_TRANSITIONS[ job ][ "startConditions" ] ).length > 0 ) {
 						var wConditions = Object.keys( STATE_TRANSITIONS[ job ][ "startConditions" ] );
-						var answers = await RU.getMultiKeys( wConditions.join(",") );
+						const x1 = wConditions.join(",");
+						var answers = await RU.getMultiKeys( x1 );
+						console.log( answers );
 						if ( answers ) {
 							for ( var i = 0; i < answers.length; ++i ) {
 								if ( answers[ i ] !== STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] ) {
@@ -59,7 +61,8 @@ var ACTIVE_SCHEDULES = [];
 				if ( STATE_TRANSITIONS[ job ][ "stopConditions" ] ) {
 					if ( Object.keys( STATE_TRANSITIONS[ job ][ "stopConditions" ] ).length > 0 ) {
 						var wConditions = Object.keys( STATE_TRANSITIONS[ job ][ "stopConditions" ] );
-						var answers = await RU.getMultiKeys( wConditions.join(",") );
+						const x1 = wConditions.join(",");
+						var answers = await RU.getMultiKeys( x1 );
 						console.log( answers );
 						if ( answers ) {
 							for ( var i = 0; i < answers.length; ++i ) {
@@ -96,7 +99,8 @@ var ACTIVE_SCHEDULES = [];
 				if ( UPDATE_JOBS[ job ][ "startConditions" ] ) {
 					if ( Object.keys( UPDATE_JOBS[ job ][ "startConditions" ] ).length > 0 ) {
 						var wConditions = Object.keys( UPDATE_JOBS[ job ][ "startConditions" ] );
-						var answers = await RU.getMultiKeys( wConditions.join(",") );
+						const x1 = wConditions.join(",");
+						var answers = await RU.getMultiKeys( x1 );
 						console.log( answers );
 						if ( answers ) {
 							for ( var i = 0; i < answers.length; ++i ) {
