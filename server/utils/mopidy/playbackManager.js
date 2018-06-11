@@ -1,5 +1,5 @@
 const RU = require( "../redis_Utils.js" );
-const RC = require( "../CONSTANTS/redis.js" ).MOPIDY;
+const RC = require( "../../CONSTANTS/redis.js" ).MOPIDY;
 const mopidy = require( "../../mopidyManager.js" ).mopidy;
 function sleep( ms ) { return new Promise( resolve => setTimeout( resolve , ms ) ); }
 
