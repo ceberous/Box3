@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Instagram Client</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/customStyle.css">
+	<link rel="stylesheet" href="../css/blueimp/blueimp-gallery.css">
+	<link rel="stylesheet" href="../css/blueimp/blueimp-gallery-indicator.css">
+	<link rel="stylesheet" href="../css/blueimp/blueimp-gallery-video.css">
+	<style type="text/css">
+		body {
+		  max-width: 750px;
+		  margin: 0 auto;
+		  padding: 1em;
+		  font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, sans-serif;
+		  font-size: 1em;
+		  line-height: 1.4em;
+		  background: #222;
+		  color: #fff;
+		  -webkit-text-size-adjust: 100%;
+		      -ms-text-size-adjust: 100%;
+		}
+		a {
+		  color: orange;
+		  text-decoration: none;
+		}
+		img {
+		  border: 0;
+		  vertical-align: middle;
+		}
+		h1 {
+		  line-height: 1em;
+		}
+		h2,
+		.links {
+		  text-align: center;
+		}
+
+		@media (min-width: 481px) {
+		  .navigation {
+		    list-style: none;
+		    padding: 0;
+		  }
+		  .navigation li {
+		    display: inline-block;
+		  }
+		  .navigation li:not(:first-child):before {
+		    content: '| ';
+		  }
+		}
+	</style>
+
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/tether.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+
+	<script src="../js/blueimp/blueimp-helper.js"></script>
+	<script src="../js/blueimp/blueimp-gallery.js"></script>
+	<script src="../js/blueimp/blueimp-gallery-fullscreen.js"></script>
+	<script src="../js/blueimp/blueimp-gallery-indicator.js"></script>
+	<script src="../js/blueimp/blueimp-gallery-video.js"></script>
+	<!-- <script src="../js/blueimp/blueimp-gallery-vimeo.js"></script> -->
+	<!-- <script src="../js/blueimp/blueimp-gallery-youtube.js"></script> -->
+	<script src="../js/blueimp/jquery.blueimp-gallery.js"></script>
+
+
+	<script src="../js/webSocketServerAddress.js"></script>
+	<script src="../js/instagram.js"></script>
+	
+</head>
+
+<body>
+<div id="mainRow1" class="row">
+<div class="col-xs-4" id="wLeftCol" ></div>
+<div class="col-xs-4 text-center">
+	<h1 class="text-center" id="wPlaceHolder">Connecting to Server ....</h1>
+	<div id="vAPP"></div>
+</div> 
+<div class="col-xs-4" id="wRightCol" ></div>
+</div>
+<div id="mainRow2" class="row">
+<div id="addPlayerHere" class="col-xs-12">
+	<!-- The Gallery as inline carousel, can be positioned anywhere on the page -->
+	<div id="blueimp-image-carousel" class="blueimp-gallery">
+	    <div class="slides"></div>
+	    <h3 class="title"></h3>
+	    <a class="prev">‹</a>
+	    <a class="next">›</a>
+	    <a class="play-pause"></a>
+	</div>
+<!-- 	<br>
+	<h2>Carousel video gallery</h2>
+	 The Gallery as inline carousel, can be positioned anywhere on the page 
+	<div id="blueimp-video-carousel" class="blueimp-gallery blueimp-gallery-controls blueimp-gallery-carousel">
+	    <div class="slides"></div>
+	    <h3 class="title"></h3>
+	    <a class="prev">‹</a>
+	    <a class="next">›</a>
+	    <a class="play-pause"></a>
+	</div>
+	<br>
+	<h2>Lightbox image gallery</h2>
+	The container for the list of example images
+	<div id="links" class="links"></div>
+	 The Gallery as lightbox dialog, should be a child element of the document body 
+	<div id="blueimp-gallery" class="blueimp-gallery">
+	    <div class="slides"></div>
+	    <h3 class="title"></h3>
+	    <a class="prev">‹</a>
+	    <a class="next">›</a>
+	    <a class="close">×</a>
+	    <a class="play-pause"></a>
+	    <ol class="indicator"></ol>
+	</div> -->
+</div>
+</div>
+</body>
+</html>

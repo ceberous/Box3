@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>MediaBrowser Control Panel</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="../css/bootstrapAlpha.min.css" />
+        <link rel="stylesheet" href="../css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../css/font-awesome.min.css" />
+        <link rel="stylesheet" href="../css/controlStyle.css" />
+
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/tether.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/socket.io.js"></script>
+        
+        <script src="../js/sockioServerAddress.js"></script>
+        <script src="../js/ajaxUTILS.js"></script>
+        
+        <script src="../js/view_populators/audioBooksRow.js"></script>
+        <script src="../js/view_populators/followerVideoRow.js"></script>
+        <script src="../js/view_populators/liveVideoRow.js"></script>
+        <script src="../js/view_populators/musicPlaylistRow.js"></script>
+        <script src="../js/view_populators/musicRow.js"></script>
+        <script src="../js/view_populators/nowPlayingRow.js"></script>
+        <script src="../js/view_populators/savedVideoRow.js"></script>
+        <script src="../js/view_populators/skypeRow.js"></script>
+
+        <script src="../js/adminPanelScript.js"></script>
+
+        <!-- http://www.layoutit.com/build -->
+        <!-- https://router.vuejs.org/en/essentials/getting-started.html -->
+
+    </head>
+
+    <body>
+        
+        <nav class="navbar fixed-top navbar-toggleable-sm navbar-inverse bg-primary mb-3">
+            <div class="flex-row d-flex">
+                <a id="homeButton" class="navbar-brand mb-1" href="#" title="Free Bootstrap 4 Admin Template">Media Browser Control Panel</a>
+                <button type="button" class="hidden-md-up navbar-toggler" data-toggle="offcanvas" title="Toggle responsive left sidebar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+
+        <div class="container-fluid" id="main">
+
+            <div class="row row-offcanvas row-offcanvas-left">
+                
+                <div class="col-md-3 col-lg-2 sidebar-offcanvas" id="sidebar" role="navigation">
+                    <ul class="nav flex-column pl-1">
+                        <li class="nav-item text-center"><button id="switchMusic" class="btn btn-warning" >Music</button></li><br>
+                        <li class="nav-item text-center"><button id="switchLiveVideo" class="btn btn-danger" >Live Video</button></li><br>
+                        <li class="nav-item text-center"><button id="switchFollowingVideo" class="btn btn-basic" >Following Video</button></li><br>
+                        <li class="nav-item text-center"><button id="switchSavedVideo" class="btn btn-success" >Saved Video</button></li><br>
+                        <li class="nav-item text-center"><button id="switchSkype" class="btn btn-primary" >Skype</button></li><br>
+                        <li class="nav-item text-center"><button id="switchAudioBook" class="btn btn-basic" >Audio Book</button></li><br>
+                        <li class="nav-item text-center"><button id="switchNowPlaying" class="btn btn-warning" >Now Playing</button></li><br>
+                    </ul>
+                </div>
+
+                <div id="workingRow" class="col-md-9 col-lg-10 main"></div>
+
+            </div>
+
+        </div>
+    
+    </body>
+</html>
