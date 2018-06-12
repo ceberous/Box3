@@ -4,6 +4,8 @@ const colors = require("colors");
 
 const StatusKeys = require( "../CONSTANTS/redis.js" ).STATUS;
 
+const DiscordLog = require( "../discordManager.js" ).log;
+
 function W_SLEEP( ms ) { return new Promise( resolve => setTimeout( resolve , ms ) ); }
 module.exports.wSleep = W_SLEEP;
 
