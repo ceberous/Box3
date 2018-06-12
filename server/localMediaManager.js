@@ -1,5 +1,7 @@
-const colors	= require( "colors" );
-function wcl( wSTR ) { console.log( colors.magenta.bgBlack( "[LOCAL_MEDIA_MAN] --> " + wSTR ) ); }
+var CLogPrefix = "[LOCAL_MEDIA_MAN] --> ";
+var CLogColorConfig = [ "magenta" , "bgBlack" ];
+const CLog = require( "./utils/generic.js" ).clog;
+function CLog1( wSTR ) { CLog( wSTR , CLogColorConfig , CLogPrefix ); }
 
 const wEmitter		= require( "../main.js" ).wEmitter;
 //const wEmitter = new (require("events").EventEmitter); // testing only
@@ -21,7 +23,7 @@ function INITIALIZE() {
 			// 1.) Load Mount Point
 			const GLOBAL_INSTANCE_MOUNT_POINT = await require( "./utils/local-media/hardDrive.js" ).reinitializeMountPoint();
 			if ( !GLOBAL_INSTANCE_MOUNT_POINT ) { resolve( "no local media" ); return; }
-			wcl( "Live Mount Point === " + GLOBAL_INSTANCE_MOUNT_POINT );
+			CLog1( "Live Mount Point === " + GLOBAL_INSTANCE_MOUNT_POINT );
 
 			wEmitter.on( "MPlayerOVER" , async function( wResults ) {
 				await UpdateLastPlayedTime( wResults );
@@ -30,9 +32,9 @@ function INITIALIZE() {
 				const wAS = await RU.getKey( "LAST_SS.ACTIVE_STATE" );
 				if ( wAS ) { 
 					if ( wAS === "LOCAL_MEDIA" ) { PLAY(); }
-					else { wcl( "WE WERE TOLD TO QUIT" ); }
+					else { CLog1( "WE WERE TOLD TO QUIT" ); }
 				}
-				else { wcl( "WE WERE TOLD TO QUIT" ); }
+				else { CLog1( "WE WERE TOLD TO QUIT" ); }
 			});
 			await RU.setKey( RC.STATUS , "ONLINE" );
 			resolve();
@@ -46,7 +48,7 @@ function LOCAL_MPLAY_WRAP( wFilePath , wCurrentTime ) {
 	return new Promise( async function( resolve , reject ) {
 		try {
 			if ( !wFilePath ) { resolve(); return; }
-			wcl( "\nSTARTING --> MPLAYER" );
+			CLog1( "\nSTARTING --> MPLAYER" );
 			await MPLAYER_MAN.playFilePath( wFilePath );
 			if ( wCurrentTime ) {
 				if ( wCurrentTime > 1 ) {
@@ -63,7 +65,7 @@ function LOCAL_MPLAY_WRAP( wFilePath , wCurrentTime ) {
 function PLAY( wOptions ) {
 	return new Promise( async function( resolve , reject ) {
 		try {
-			wcl( "play()" );
+			CLog1( "play()" );
 			const FinalNowPlaying = await require( "./utils/local-media/calculate.js" ).next( wOptions );
 			await LOCAL_MPLAY_WRAP( FinalNowPlaying.fp , FinalNowPlaying.cur_time );
 			resolve();
@@ -76,7 +78,7 @@ module.exports.play = PLAY;
 function PAUSE( wOptions ) {
 	return new Promise( function( resolve , reject ) {
 		try {
-			wcl( "pause()" );
+			CLog1( "pause()" );
 			resolve();
 		}
 		catch( error ) { console.log( error ); reject( error ); }
@@ -87,7 +89,7 @@ module.exports.pause = PAUSE;
 function RESUME( wOptions ) {
 	return new Promise( function( resolve , reject ) {
 		try {
-			wcl( "resume()" );
+			CLog1( "resume()" );
 			resolve();
 		}
 		catch( error ) { console.log( error ); reject( error ); }
@@ -98,7 +100,7 @@ module.exports.resume = RESUME;
 function STOP( wOptions ) {
 	return new Promise( async function( resolve , reject ) {
 		try {
-			wcl( "stop()" );
+			CLog1( "stop()" );
 			const cur_time = MPLAYER_MAN.silentStop();
 			await UpdateLastPlayedTime( cur_time );
 			resolve();
@@ -111,7 +113,7 @@ module.exports.stop = STOP;
 function NEXT( wOptions ) {
 	return new Promise( async function( resolve , reject ) {
 		try {
-			wcl( "next()" );
+			CLog1( "next()" );
 			await STOP();
 			await require( "./utils/local-media/calculate.js" ).skip();
 			await PLAY();
@@ -125,7 +127,7 @@ module.exports.next = NEXT;
 function PREVIOUS( wOptions ) {
 	return new Promise( async function( resolve , reject ) {
 		try {
-			wcl( "previous()" );
+			CLog1( "previous()" );
 			await STOP();
 			const previous = await require( "./utils/local-media/calculate.js" ).previous();
 			await LOCAL_MPLAY_WRAP( previous.fp , previous.cur_time );
@@ -170,7 +172,7 @@ module.exports.shutdown = SHUTDOWN_ALL;
 // });
 
 // process.on( "SIGINT" , async function () {
-// 	wcl( "Shutting Down" );
+// 	CLog1( "Shutting Down" );
 // 	await STOP();
 // 	await wSleep( 1000 );
 // 	process.exit( 1 );
@@ -181,9 +183,9 @@ module.exports.shutdown = SHUTDOWN_ALL;
 // 	// testing only , otherwize , we get redis already from main.js
 // 	await require( "./utils/redisManager.js" ).loadRedis();
 // 	redis = require( "./utils/redisManager.js" ).redis;
-// 	wcl( "LOADED Redis-Client" );
+// 	CLog1( "LOADED Redis-Client" );
 // 	await require( "./slackManager.js" ).initialize();
-// 	wcl( "LOADED Slack-Client" );	
+// 	CLog1( "LOADED Slack-Client" );	
 // 	// testing only
 
 // 	await INITIALIZE();

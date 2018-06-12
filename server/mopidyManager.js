@@ -3,13 +3,14 @@ const wEmitter	= require("../main.js").wEmitter;
 const RU = require( "./utils/redis_Utils.js" );
 const RC = require( "./CONSTANTS/redis.js" ).MOPIDY;
 
-
-const colors = require("colors");
 const Mopidy = require("mopidy");
 
 // https://github.com/thebigmunch/gmusicapi-scripts
 
-function wcl( wSTR ) { console.log( colors.white.bgBlue( "[MOPIDY_MAN] --> " + wSTR ) ); }
+var CLogPrefix = "[MOPIDY_MAN] --> ";
+var CLogColorConfig = [ "white" , "bgBlue" ];
+const CLog = require( "./utils/generic.js" ).clog;
+function CLog1( wSTR ) { CLog( wSTR , CLogColorConfig , CLogPrefix ); }
 function tryIgnoreError( wFunc ) { try { wFunc(); } catch( error ) { return; } }
 function sleep( ms ) { return new Promise( resolve => setTimeout( resolve , ms ) ); }
 
@@ -21,7 +22,7 @@ function sleep( ms ) { return new Promise( resolve => setTimeout( resolve , ms )
 
 var mopidy = null;
 Mopidy.prototype._handleWebSocketError = async function ( error ) { 
-	wcl( "Mopdiy WebSocket ERROR" ); 
+	CLog1( "Mopdiy WebSocket ERROR" ); 
 	this._cleanup(); 
 	this.close(); 
 	mopidy.off(); 
@@ -36,7 +37,7 @@ function tryToConnectMopidy( wPort ) {
 			autoConnect: true ,
 			callingConvention: "by-position-or-by-name"
 		});
-	} catch( error ) { wcl( "ERROR --> Mopdiy Binary not Running !" ); }
+	} catch( error ) { CLog1( "ERROR --> Mopdiy Binary not Running !" ); }
 }
 tryToConnectMopidy( 6690 );
 module.exports.mopidy = mopidy;
@@ -48,7 +49,7 @@ const EVENT_TIME_EASEMENT = 5000;
 const R_LAST_SS_BASE = "LAST_SS.MOPIDY.";
 const R_CONTINUOUS_PLAY = R_LAST_SS_BASE + "CONTINUOUS_PLAY";
 mopidy.on( "event:trackPlaybackEnded" , async function ( wEvent ) {
-	wcl( "PLAYBACK --> ENDED" );
+	CLog1( "PLAYBACK --> ENDED" );
 	await sleep( 1000 );
 	const time_now = new Date().getTime();
 	const wDiff = ( time_now - LAST_EVENT_TIME );
@@ -76,15 +77,15 @@ mopidy.on( "event:trackPlaybackStarted" , async function ( wEvent ) {
 	if ( wCT === null ) { return; }
 	await RU.setKey( R_NOW_PLAYING , JSON.stringify( wCT ) );
 	console.log("");
-	wcl( "PLAYBACK --> STARTED || CURRENT-TRACK --> " );
-	wcl( "Title = " + wCT[ "name" ] );
-	wcl( "Artist = " + wCT[ "artists" ][0].name );
+	CLog1( "PLAYBACK --> STARTED || CURRENT-TRACK --> " );
+	CLog1( "Title = " + wCT[ "name" ] );
+	CLog1( "Artist = " + wCT[ "artists" ][0].name );
 });
 
 mopidy.on( "event:playbackStateChanged" , async function ( wEvent ) {
 	await sleep( 3000 );
 	await RU.setKey( RC.STATE , wEvent.new_state.toUpperCase() );
-	wcl( "PLAYBACK --> CHANGED --> " );
+	CLog1( "PLAYBACK --> CHANGED --> " );
 	console.log( wEvent );
 });
 
@@ -100,7 +101,7 @@ function GLOBAL_SHUTDOWN() {
 			mopidy = null;
 			await RU.setKey( RC.STATUS , "OFFLINE" );
 			await RU.setKey( RC.STATE , "STOPPED" );
-			wcl( "CLOSED" );
+			CLog1( "CLOSED" );
 			resolve();
 		}
 		catch( error ) { console.log( error ); reject( error ); }
@@ -113,7 +114,7 @@ function GLOBAL_INITIALIZE() {
 			await require( "./utils/mopidy/libraryManager.js" ).initialize();
 			await require( "./utils/mopidy/playbackManager.js" ).initialize();
 			await require( "./utils/mopidy/tracklistManager.js" ).initialize();
-			wcl( "CONNECTED !!!" );
+			CLog1( "CONNECTED !!!" );
 			await RU.setKey( RC.STATUS , "ONLINE" );
 			resolve();
 		}
@@ -124,7 +125,7 @@ function GLOBAL_INITIALIZE() {
 module.exports.shutdown = GLOBAL_SHUTDOWN;
 
 // process.on( "SIGINT" , async function () {
-// 	wcl( "Shutting Down" );
+// 	CLog1( "Shutting Down" );
 // 	await GLOBAL_SHUTDOWN();
 // 	// await sleep( 1000 );
 // 	// process.exit(1);
