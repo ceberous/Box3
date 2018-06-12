@@ -16,12 +16,12 @@ var ACTIVE_SCHEDULES = [];
 // Initialize State Transition Schedules
 ( async ()=> {
 
-	wcl( "syncing schedules" );
+	CLog1( "syncing schedules" );
 	SCHEDULE = require( "../config/schedules.json" );
 	STATE_TRANSITIONS = SCHEDULE.STATE_TRANSITIONS;
 	UPDATE_JOBS = SCHEDULE.UPDATES;
 
-	wcl( "setting up state transition schedules" );
+	CLog1( "setting up state transition schedules" );
 	for ( var job in STATE_TRANSITIONS ) {
 		
 		if ( STATE_TRANSITIONS[ job ][ "startPattern" ] ) {
@@ -82,7 +82,7 @@ var ACTIVE_SCHEDULES = [];
 
 // Initialize Update Functions
 ( async ()=> {
-	wcl( "setting up update function schedules" );
+	CLog1( "setting up update function schedules" );
 	for ( var job in UPDATE_JOBS ) {
 		if ( UPDATE_JOBS[ job ][ "startPattern" ] ) {
 			ACTIVE_SCHEDULES.push({ name: job , pid: schedule.scheduleJob( UPDATE_JOBS[ job ][ "startPattern" ] , async function() {
