@@ -23,8 +23,8 @@ function GET_NOW_TIME() {
 	if ( parseInt( hours ) < 10 ) { hours = "0" + hours; }
 	var minutes = today.getMinutes();
 	if ( parseInt( minutes ) < 10 ) { minutes = "0" + minutes; }
-	var milliseconds = today.getTime();
-	var seconds = milliseconds / 1000;
+	var milliseconds = today.getMilliseconds();
+	var seconds = today.getSeconds();
 	if ( parseInt( seconds ) < 10 ) { seconds = "0" + seconds; }
 	return day + month + year + " @ " + hours + ":" + minutes + ":" + seconds;
 }
