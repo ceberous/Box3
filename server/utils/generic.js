@@ -28,9 +28,11 @@ function GET_NOW_TIME() {
 module.exports.time = GET_NOW_TIME;
 
 function COMMON_LOG( wSTR , wColorsConfig , wPrefix ) {
+	if ( !wSTR ) { return; }
+	if ( wSTR.length < 1 ) { return; }
 	const now_time = GET_NOW_TIME();
-	wSTR = now_time + " = " + wSTR;
 	if ( wPrefix ) { wSTR = wPrefix + wSTR; }
+	wSTR = now_time + " === " + wSTR;
 	if ( wColorsConfig ) {
 		if ( wColorsConfig.length > 0 ) {
 			if ( wColorsConfig.length === 2 ) {

@@ -10,6 +10,7 @@ var discordCreds = null;
 function POST_ID( wMessage , wChannelID ) {
 	return new Promise( async function( resolve , reject ) {
 		try {
+			if ( !discordBot ) { resolve(); return; }
 			await discordBot.createMessage( wChannelID , wMessage );
 			resolve();
 		}
@@ -21,6 +22,7 @@ module.exports.postID = POST_ID;
 function POST_NOW_PLAYING( wMessage ) {
 	return new Promise( async function( resolve , reject ) {
 		try {
+			if ( !discordBot ) { resolve(); return; }
 			await discordBot.createMessage( discordCreds.channels.now_playing , wMessage );
 			resolve();
 		}
@@ -32,6 +34,7 @@ module.exports.nowPlaying = POST_NOW_PLAYING;
 function POST_LOG( wMessage ) {
 	return new Promise( async function( resolve , reject ) {
 		try {
+			if ( !discordBot ) { resolve(); return; }
 			await discordBot.createMessage( discordCreds.channels.log , wMessage );
 			resolve();
 		}
@@ -43,6 +46,7 @@ module.exports.log = POST_LOG;
 function POST_ERROR( wStatus ) {
 	return new Promise( async function( resolve , reject ) {
 		try {
+			if ( !discordBot ) { resolve(); return; }
 			if ( !wStatus ) { resolve(); return; }
 			if ( typeof wStatus !== "string" ) {
 				try { wStatus = wStatus.toString(); }
