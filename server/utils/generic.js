@@ -22,9 +22,11 @@ function GET_NOW_TIME() {
 	var hours = today.getHours();
 	if ( parseInt( hours ) < 10 ) { hours = "0" + hours; }
 	var minutes = today.getMinutes();
-	if ( parseInt( minutes ) < 10 ) { minutes = "0" + minutes; }	
-	
-	return day + month + year + " @ " + hours + ":" + minutes;
+	if ( parseInt( minutes ) < 10 ) { minutes = "0" + minutes; }
+	var milliseconds = today.getTime();
+	var seconds = milliseconds / 1000;
+	if ( parseInt( seconds ) < 10 ) { seconds = "0" + seconds; }
+	return day + month + year + " @ " + hours + ":" + minutes + ":" + seconds;
 }
 module.exports.time = GET_NOW_TIME;
 
