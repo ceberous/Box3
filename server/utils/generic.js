@@ -35,10 +35,10 @@ function COMMON_LOG( wSTR , wColorsConfig , wPrefix ) {
 	if ( !wSTR ) { return; }
 	if ( wSTR.length < 1 ) { return; }
 	const now_time = GET_NOW_TIME();
-	wSTR = now_time + " === " + wSTR;
 	if ( wColorsConfig ) {
 		var x1 = wSTR;
-		if ( wPrefix ) { x1 = wPrefix + x1; }
+		if ( wPrefix ) { x1 = now_time + " === " + wPrefix + x1; }
+		else { x1 = now_time + " === " + x1; }	
 		if ( wColorsConfig.length > 0 ) {
 			if ( wColorsConfig.length === 2 ) {
 				console.log( colors[ wColorsConfig[ 0 ] ][ wColorsConfig[ 1 ] ]( x1 ) );
@@ -47,8 +47,10 @@ function COMMON_LOG( wSTR , wColorsConfig , wPrefix ) {
 				console.log( colors[ wColorsConfig[ 0 ] ]( x1 ) );
 			}
 		}
+		else { console.log( x1 ); }
 	}
-	if ( wPrefix ) { wSTR = "**" + wPrefix + "**" + wSTR; }
+	if ( wPrefix ) { wSTR = now_time + " === " + "**" + wPrefix + "**" + wSTR; }
+	else { wSTR = now_time + " === " wSTR; }
 	DiscordLog( wSTR );
 }
 module.exports.clog = COMMON_LOG;
@@ -57,18 +59,22 @@ function COMMON_ERROR_LOG( wSTR , wColorsConfig , wPrefix ) {
 	if ( !wSTR ) { return; }
 	if ( wSTR.length < 1 ) { return; }
 	const now_time = GET_NOW_TIME();
-	if ( wPrefix ) { wSTR = wPrefix + wSTR; }
-	wSTR = now_time + " === " + wSTR;
 	if ( wColorsConfig ) {
+		var x1 = wSTR;
+		if ( wPrefix ) { x1 = now_time + " === " + wPrefix + x1; }
+		else { x1 = now_time + " === " + x1; }	
 		if ( wColorsConfig.length > 0 ) {
 			if ( wColorsConfig.length === 2 ) {
-				console.log( colors[ wColorsConfig[ 0 ] ][ wColorsConfig[ 1 ] ]( wSTR ) );
+				console.log( colors[ wColorsConfig[ 0 ] ][ wColorsConfig[ 1 ] ]( x1 ) );
 			}
 			else {
-				console.log( colors[ wColorsConfig[ 0 ] ]( wSTR ) );
+				console.log( colors[ wColorsConfig[ 0 ] ]( x1 ) );
 			}
 		}
+		else { console.log( x1 ); }
 	}
+	if ( wPrefix ) { wSTR = now_time + " === " + "**" + wPrefix + "**" + wSTR; }
+	else { wSTR = now_time + " === " wSTR; }
 	DiscordErrorLog( wSTR );
 }
 module.exports.celog = COMMON_ERROR_LOG;
