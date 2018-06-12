@@ -29,7 +29,7 @@ module.exports.time = GET_NOW_TIME;
 
 function COMMON_LOG( wSTR , wColorsConfig , wPrefix ) {
 	const now_time = GET_NOW_TIME();
-	wSTR = now_time + " = ";
+	wSTR = now_time + " = " + wSTR;
 	if ( wPrefix ) { wSTR = wPrefix + wSTR; }
 	if ( wColorsConfig ) {
 		if ( wColorsConfig.length > 0 ) {
