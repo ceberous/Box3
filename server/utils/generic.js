@@ -23,10 +23,12 @@ function GET_NOW_TIME() {
 	if ( parseInt( hours ) < 10 ) { hours = "0" + hours; }
 	var minutes = today.getMinutes();
 	if ( parseInt( minutes ) < 10 ) { minutes = "0" + minutes; }
-	var milliseconds = today.getMilliseconds();
 	var seconds = today.getSeconds();
 	if ( parseInt( seconds ) < 10 ) { seconds = "0" + seconds; }
-	return day + month + year + " @ " + hours + ":" + minutes + ":" + seconds;
+	var milliseconds = today.getMilliseconds();
+	if ( parseInt( milliseconds ) < 10 ) { milliseconds = "00" + milliseconds; }
+	else if ( parseInt( milliseconds ) < 100 ) { milliseconds = "0" + milliseconds; }
+	return day + month + year + " @ " + hours + ":" + minutes + ":" + seconds + "." + milliseconds;
 }
 module.exports.time = GET_NOW_TIME;
 
