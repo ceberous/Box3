@@ -35,19 +35,21 @@ function COMMON_LOG( wSTR , wColorsConfig , wPrefix ) {
 	if ( !wSTR ) { return; }
 	if ( wSTR.length < 1 ) { return; }
 	const now_time = GET_NOW_TIME();
-	if ( wPrefix ) { wSTR = wPrefix + wSTR; }
 	wSTR = now_time + " === " + wSTR;
 	if ( wColorsConfig ) {
+		var x1 = wSTR;
+		if ( wPrefix ) { x1 = wPrefix + x1; }
 		if ( wColorsConfig.length > 0 ) {
 			if ( wColorsConfig.length === 2 ) {
-				console.log( colors[ wColorsConfig[ 0 ] ][ wColorsConfig[ 1 ] ]( wSTR ) );
+				console.log( colors[ wColorsConfig[ 0 ] ][ wColorsConfig[ 1 ] ]( x1 ) );
 			}
 			else {
-				console.log( colors[ wColorsConfig[ 0 ] ]( wSTR ) );
+				console.log( colors[ wColorsConfig[ 0 ] ]( x1 ) );
 			}
 		}
 	}
-	DiscordLog( wSTR );	
+	if ( wPrefix ) { wSTR = "**" + wPrefix + "**" + wSTR; }
+	DiscordLog( wSTR );
 }
 module.exports.clog = COMMON_LOG;
 
