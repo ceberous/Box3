@@ -1,6 +1,5 @@
 const wEmitter = require('../main.js').wEmitter;
 const wPressButtonMaster = require("./clientManager.js").pressButtonMaster;
-const colors = require("colors");
 const fs = require("fs");
 const path = require("path");
 const StringDecoder = require("string_decoder").StringDecoder;
@@ -11,7 +10,10 @@ require("shelljs/global");
 const RU = require( "./utils/redis_Utils.js" );
 const RC = require( "./CONSTANTS/redis.js" ).BUTTONS;
 
-function wcl( wSTR ) { console.log( colors.yellow.bgBlack( "[BUTTON_MAN] --> " + wSTR ) ); }
+var CLogPrefix = "[BUTTON_MAN] --> ";
+var CLogColorConfig = [ "yellow" , "bgBlack" ];
+const CLog = require( "./utils/generic.js" ).clog;
+function CLog1( wSTR ) { CLog( wSTR , CLogColorConfig , CLogPrefix ); }
 
 // https://blog.petrockblock.com/controlblock/
 // http://www.cuddleburrito.com/blog/2015/5/31/connecting-raspberry-pi-arcade-buttons-to-gpio
@@ -38,7 +40,7 @@ function getUSBDeviceEventPath() {
 
 	var findEventPathCMD = exec( findEventPath , { silent:true , async: false } );
 	
-	if ( findEventPathCMD.stderr.length > 1 ) { wcl( "ERROR --> " + findEventPathCMD.stderr  ); }
+	if ( findEventPathCMD.stderr.length > 1 ) { CLog1( "ERROR --> " + findEventPathCMD.stderr  ); }
 
 	findEventPathCMD = findEventPathCMD.stdout.split("\n");
 
@@ -48,7 +50,7 @@ function getUSBDeviceEventPath() {
 		if ( wT[wT.length-3] === usbDeviceID ) {
 			var wEvent = wT[wT.length-1].split("../");
 			var wEventPath = 'eventPath = "/dev/input/' + wEvent[1] + '"';
-			wcl( wEventPath );
+			CLog1( wEventPath );
 			fs.writeFileSync( path.join( __dirname , "py_scripts" , "usbDevicePath.py" ) , wEventPath );
 			return true;
 		}
@@ -79,7 +81,7 @@ function cleanseButtonENV() {
 					wTest = parseInt( wTest );
 					if ( isNaN(wTest) ) { continue; }
 					if ( wTest < 300 ) { continue; }
-					wcl( "wTest = " + wTest.toString() +  " PID: " + wOut2[ j ] + " = " + wOut3[ wOut3.length - 1 ] );
+					CLog1( "wTest = " + wTest.toString() +  " PID: " + wOut2[ j ] + " = " + wOut3[ wOut3.length - 1 ] );
 					wPIDS.push( wOut2[j] );
 				}
 				
@@ -92,14 +94,14 @@ function cleanseButtonENV() {
 
 	var openResult = isButtonScriptOpen();
 	if ( openResult === -1 ) {
-		wcl("failed to find script");
+		CLog1("failed to find script");
 	}
 	else {
 		var wCMD2 = "sudo kill -9 ";
 		for ( var i = 0; i < openResult.length; ++i ) {
 			var wKillCMD = wCMD2 + openResult[i];
 			exec( wKillCMD , { silent: true , async: false } );
-			wcl( wKillCMD );
+			CLog1( wKillCMD );
 		}
 	}
 
@@ -111,7 +113,7 @@ cleanseButtonENV();
 
 const buttonScript = path.join( __dirname , "py_scripts" , "buttonWatcher.py" );
 var ButtonManager = spawn( "python" , [ buttonScript ] );
-wcl( "@@PID=" + ButtonManager.pid );
+CLog1( "@@PID=" + ButtonManager.pid );
 
 var lastPressed = new Date().getTime();
 var timeNow;
@@ -120,7 +122,7 @@ var handleButtonInput = function(wInput) {
 	console.log(wInput);
 
 	timeNow = new Date().getTime();
-	if ( ( timeNow - lastPressed ) < 3000 ) { wcl("pressed too soon"); return; }
+	if ( ( timeNow - lastPressed ) < 3000 ) { CLog1("pressed too soon"); return; }
 	lastPressed = timeNow;
 
 	var wE = "button" + wInput + "Press";
@@ -147,8 +149,8 @@ ButtonManager.stdout.on( "data" , function( data ) {
 ButtonManager.stderr.on( "data" , function(data) {
 	var message = decoder.write(data);
 	message = message.trim();
-	wcl( "[buttonWatcher.py] --> ERROR -->".green  );
-	wcl( message );
+	CLog1( "[buttonWatcher.py] --> ERROR -->".green  );
+	CLog1( message );
 	stopScript();
 	//wEmitter.emit( "properShutdown" );
 	//setTimeout( ()=> { process.exit(1); } , 2000 );

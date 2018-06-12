@@ -1,6 +1,9 @@
 const path	= require( "path" );
-const colors	= require( "colors" );
-function wcl( wSTR ) { console.log( colors.black.bgWhite( "[CLIENT_MAN] --> " + wSTR ) ); }
+var CLogPrefix = "[CLIENT_MAN] --> ";
+var CLogColorConfig = [ "black" , "bgWhite" ];
+const CLog = require( "./utils/generic.js" ).clog;
+function CLog1( wSTR ) { CLog( wSTR , CLogColorConfig , CLogPrefix ); }
+
 
 const wSleep = require( "./utils/generic.js" ).wSleep;
 
@@ -28,7 +31,7 @@ async function wSendButtonPressNotification( wButtonNum ) {
 }
 
 async function wPressButtonMaster( wButtonNum , wOptions , wMasterClose ) {
-	wcl( "wPressButtonMaster( " + wButtonNum.toString() + " )" );
+	CLog1( "wPressButtonMaster( " + wButtonNum.toString() + " )" );
 	if ( wBTN_I > 20 || wBTN_I < 0 ) { return "out of range"; }
 	wOptions = wOptions || BTN_MAP[ wButtonNum ][ "options" ];
 	wSendButtonPressNotification( wButtonNum );
@@ -36,7 +39,7 @@ async function wPressButtonMaster( wButtonNum , wOptions , wMasterClose ) {
 	if ( wBTN_I === 6 ) {
 		if ( CURRENT_STATE ) {
 			if ( CURRENT_STATE !== null ) {
-				wcl( "stopping CURRENT_STATE" ); 
+				CLog1( "stopping CURRENT_STATE" ); 
 				await CURRENT_STATE.stop();
 				try { delete require.cache[ CURRENT_STATE ]; }
 				catch ( e ) {}			
@@ -67,14 +70,14 @@ async function wPressButtonMaster( wButtonNum , wOptions , wMasterClose ) {
 		}
 		if ( CURRENT_STATE ) {
 			if ( CURRENT_STATE !== null ) {
-				wcl( "stopping CURRENT_STATE" ); 
+				CLog1( "stopping CURRENT_STATE" ); 
 				await CURRENT_STATE.stop(); 
 				await wSleep( 1000 );
 			}
 		}
 		require( "./utils/cecClientManager.js" ).activate();		
-		wcl( "LAUNCHING STATE--->" );
-		wcl( launching_fp );
+		CLog1( "LAUNCHING STATE--->" );
+		CLog1( launching_fp );
 		try { delete require.cache[ CURRENT_STATE ]; }
 		catch ( e ) {}
 		CURRENT_STATE = null;
@@ -84,7 +87,7 @@ async function wPressButtonMaster( wButtonNum , wOptions , wMasterClose ) {
 		if ( wOptions.mode ) { cached_mode = wOptions.mode; }
 		await CURRENT_STATE.start( wOptions );
 	}
-	else { if ( CURRENT_STATE ) { wcl( "STATE ACTION --> " + BTN_MAP[ wButtonNum ][ "label" ] + "()" ); CURRENT_STATE[ BTN_MAP[ wButtonNum ][ "label" ] ](); } }
+	else { if ( CURRENT_STATE ) { CLog1( "STATE ACTION --> " + BTN_MAP[ wButtonNum ][ "label" ] + "()" ); CURRENT_STATE[ BTN_MAP[ wButtonNum ][ "label" ] ](); } }
 }
 module.exports.pressButtonMaster = wPressButtonMaster;
 
@@ -99,8 +102,8 @@ const SCHEDULE_MAN 		= require( "./scheduleManager.js" );
 // ======================================================================
 
 ( async ()=> {
-	wcl( "Initializing stuff" );
+	CLog1( "Initializing stuff" );
 	await require( "./localMediaManager.js" ).initialize();
 	await require( "./YOUTUBE/standard.js" ).update();
-	wcl( "we are done with Initialization" );
+	CLog1( "we are done with Initialization" );
 })();
