@@ -50,7 +50,7 @@ function COMMON_LOG( wSTR , wColorsConfig , wPrefix ) {
 		else { console.log( x1 ); }
 	}
 	if ( wPrefix ) { wSTR = now_time + " === " + "**" + wPrefix + "**" + wSTR; }
-	else { wSTR = now_time + " === " wSTR; }
+	else { wSTR = now_time + " === " + wSTR; }
 	DiscordLog( wSTR );
 }
 module.exports.clog = COMMON_LOG;
@@ -205,7 +205,7 @@ module.exports.rebootRouter = REBOOT_ROUTER;
 function RESTART_PM2() {
 	return new Promise( function( resolve , reject ) {
 		try {
-			exec( "pm2 restartAll" , { silent: true , async: false } );
+			exec( "pm2 restart Box3" , { silent: true , async: false } );
 		}
 		catch( error ) { console.log( error ); reject( error ); }
 	});
