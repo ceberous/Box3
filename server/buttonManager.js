@@ -13,7 +13,10 @@ const RC = require( "./CONSTANTS/redis.js" ).BUTTONS;
 var CLogPrefix = "[BUTTON_MAN] --> ";
 var CLogColorConfig = [ "yellow" , "bgBlack" ];
 const CLog = require( "./utils/generic.js" ).clog;
+const CELog = require( "./utils/generic.js" ).celog;
 function CLog1( wSTR ) { CLog( wSTR , CLogColorConfig , CLogPrefix ); }
+function CELog1( wSTR ) { CELog( wSTR , CLogColorConfig , CLogPrefix ); }
+
 
 // https://blog.petrockblock.com/controlblock/
 // http://www.cuddleburrito.com/blog/2015/5/31/connecting-raspberry-pi-arcade-buttons-to-gpio
@@ -40,7 +43,7 @@ function getUSBDeviceEventPath() {
 
 	var findEventPathCMD = exec( findEventPath , { silent:true , async: false } );
 	
-	if ( findEventPathCMD.stderr.length > 1 ) { CLog1( "ERROR --> " + findEventPathCMD.stderr  ); }
+	if ( findEventPathCMD.stderr.length > 1 ) { CELog1( "ERROR --> " + findEventPathCMD.stderr  ); }
 
 	findEventPathCMD = findEventPathCMD.stdout.split("\n");
 
@@ -68,7 +71,7 @@ function cleanseButtonENV() {
 		var wPIDS = [];
 		const wCMD1 = "ps aux | grep python";
 		var findButton = exec( wCMD1 , { silent:true , async: false });
-		if ( findButton.stderr.length > 1 || findButton.stdout.length < 1 ) { return -1; }
+		if ( findButton.stderr.length > 1 || findButton.stdout.length < 1 ) { CELog1( findButton.stderr.trim() ) return -1; }
 
 		var wOutput = findButton.stdout.split("\n");
 		for ( var i = 0; i < wOutput.length; ++i ) {
@@ -94,7 +97,7 @@ function cleanseButtonENV() {
 
 	var openResult = isButtonScriptOpen();
 	if ( openResult === -1 ) {
-		CLog1("failed to find script");
+		CELog1("failed to find script");
 	}
 	else {
 		var wCMD2 = "sudo kill -9 ";
@@ -149,8 +152,8 @@ ButtonManager.stdout.on( "data" , function( data ) {
 ButtonManager.stderr.on( "data" , function(data) {
 	var message = decoder.write(data);
 	message = message.trim();
-	CLog1( "[buttonWatcher.py] --> ERROR -->".green  );
-	CLog1( message );
+	CELog1( "[buttonWatcher.py] --> ERROR -->".green  );
+	CELog1( message );
 	stopScript();
 	//wEmitter.emit( "properShutdown" );
 	//setTimeout( ()=> { process.exit(1); } , 2000 );

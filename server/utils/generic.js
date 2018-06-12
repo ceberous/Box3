@@ -5,6 +5,7 @@ const colors = require("colors");
 const StatusKeys = require( "../CONSTANTS/redis.js" ).STATUS;
 
 const DiscordLog = require( "../discordManager.js" ).log;
+const DiscordErrorLog = require( "../discordManager.js" ).error;
 
 function W_SLEEP( ms ) { return new Promise( resolve => setTimeout( resolve , ms ) ); }
 module.exports.wSleep = W_SLEEP;
@@ -46,6 +47,26 @@ function COMMON_LOG( wSTR , wColorsConfig , wPrefix ) {
 	DiscordLog( wSTR );	
 }
 module.exports.clog = COMMON_LOG;
+
+function COMMON_ERROR_LOG( wSTR , wColorsConfig , wPrefix ) {
+	if ( !wSTR ) { return; }
+	if ( wSTR.length < 1 ) { return; }
+	const now_time = GET_NOW_TIME();
+	if ( wPrefix ) { wSTR = wPrefix + wSTR; }
+	wSTR = now_time + " === " + wSTR;
+	if ( wColorsConfig ) {
+		if ( wColorsConfig.length > 0 ) {
+			if ( wColorsConfig.length === 2 ) {
+				console.log( colors[ wColorsConfig[ 0 ] ][ wColorsConfig[ 1 ] ]( wSTR ) );
+			}
+			else {
+				console.log( colors[ wColorsConfig[ 0 ] ]( wSTR ) );
+			}
+		}
+	}
+	DiscordErrorLog( wSTR );
+}
+module.exports.celog = COMMON_ERROR_LOG;
 
 function FIX_PATH_SPACE( wFP ) {
 	var fixSpace = new RegExp( " " , "g" );
