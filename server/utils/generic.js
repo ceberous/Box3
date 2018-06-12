@@ -74,7 +74,7 @@ function COMMON_ERROR_LOG( wSTR , wColorsConfig , wPrefix ) {
 		else { console.log( x1 ); }
 	}
 	if ( wPrefix ) { wSTR = now_time + " === " + "**" + wPrefix + "**" + wSTR; }
-	else { wSTR = now_time + " === " wSTR; }
+	else { wSTR = now_time + " === " + wSTR; }
 	DiscordErrorLog( wSTR );
 }
 module.exports.celog = COMMON_ERROR_LOG;
