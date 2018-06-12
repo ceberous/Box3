@@ -55,6 +55,7 @@ function SEND_STAGED_WS_MESSAGE() {
 }
 
 ( async ()=> {
+	
 	wcl( "starting" );
 
 	require( "./config/writer.js" );
@@ -106,6 +107,7 @@ function SEND_STAGED_WS_MESSAGE() {
 	});
 
 	await require( "./server/utils/generic.js" ).getStatusReport();
+	await require( "./server/utils/generic.js" ).wSleep( 2000 );
 	CLog1( "Server Online" );
 
 })();
