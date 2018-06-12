@@ -6,7 +6,7 @@ const wButtonMaster = require( "./clientManager.js" ).pressButtonMaster;
 
 var CLogPrefix = "[SCHEDULE_MAN] --> ";
 var CLogColorConfig = [ "yellow" , "bgGreen" ];
-const CLog = require( "./server/utils/generic.js" ).clog;
+const CLog = require( "./utils/generic.js" ).clog;
 function CLog1( wSTR ) { CLog( wSTR , CLogColorConfig , CLogPrefix ); }
 
 
