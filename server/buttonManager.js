@@ -71,7 +71,8 @@ function cleanseButtonENV() {
 		var wPIDS = [];
 		const wCMD1 = "ps aux | grep python";
 		var findButton = exec( wCMD1 , { silent:true , async: false });
-		if ( findButton.stderr.length > 1 || findButton.stdout.length < 1 ) { CELog1( findButton.stderr.trim() ); return -1; }
+		if ( findButton.stderr.length > 1 ) { CELog1( findButton.stderr.trim() ); return -1; }
+		else if ( findButton.stdout.length < 1 ) { return -1; }
 
 		var wOutput = findButton.stdout.split("\n");
 		for ( var i = 0; i < wOutput.length; ++i ) {
