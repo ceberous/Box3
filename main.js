@@ -82,7 +82,7 @@ function SEND_STAGED_WS_MESSAGE() {
 	wcl( "LOADED FF-Client Web-Socket Stuff" );
 
 	await require( "./server/discordManager.js" ).intitialize();
-	await require( "./server/utils/generic.js" ).wSleep( 2000 );
+	await require( "./server/utils/generic.js" ).wSleep( 5000 );
 	wcl( "LOADED Discord-Client" );
 
 	server.listen( port , async function() {

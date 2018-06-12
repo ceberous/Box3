@@ -66,7 +66,6 @@ function REDIS_GET_FROM_LIST_BY_INDEX( wKey , wIndex ) {
 }
 
 function REDIS_GET_MULTI_KEY( ...args ) {
-	console.log( ...args );
 	return new Promise( function( resolve , reject ) {
 		try { rInstance.mget( ...args , function( err , values ) { resolve( values ); }); }
 		catch( error ) { console.log( error ); reject( error ); }
