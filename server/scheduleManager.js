@@ -107,11 +107,12 @@ var ACTIVE_SCHEDULES = [];
 					const B_PATH = path.join( __dirname , ...UPDATE_JOBS[ job ][ "functionPath" ] );
 					if ( UPDATE_JOBS[ job ][ "functionName" ] ) {
 						require( B_PATH )[ UPDATE_JOBS[ job ][ "functionName" ] ]();
+						CLog1( "Running Scheduled FN --> " + B_PATH + " --> " + functionName );
 					}
 					else {
+						CLog1( "Running Scheduled FN --> " + B_PATH );
 						require( B_PATH )();
 					}
-					CLog1( "Running Scheduled FN --> " + B_PATH + " --> " + functionName );
 				}
 				else {
 					CLog1( "conditions not met for --> " + job );

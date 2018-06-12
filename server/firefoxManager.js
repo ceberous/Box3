@@ -3,13 +3,15 @@ const wEmitter = require("../main.js").wEmitter;
 
 require( "shelljs/global" );
 const path = require("path");
-const colors = require("colors");
 const shellescape = require( "shell-escape" );
 
 const launchFFPath = path.join( __dirname , "./utils/ffLauncher.js" );
 const xdoWrapper = require( "./utils/xdotoolWrapper.js" );
 
-function wcl( wSTR ) { console.log( colors.black.bgRed( "[FIREFOX_MAN] --> " + wSTR ) ); }
+var CLogPrefix = "[FIREFOX_MAN] --> ";
+var CLogColorConfig = [ "black" , "bgRed" ];
+const CLog = require( "./utils/generic.js" ).clog;
+function CLog1( wSTR ) { CLog( wSTR , CLogColorConfig , CLogPrefix ); }
 function wsleep( ms ) { return new Promise( resolve => setTimeout( resolve , ms ) ); }
 
 // https://addons.mozilla.org/en-US/firefox/addon/r-kiosk/
@@ -30,7 +32,7 @@ const ffWrapper = {
 
 	init: function() {
 
-		wcl( "initializing ffWrapper" );
+		CLog1( "initializing ffWrapper" );
 		ffWrapper.isFFOpen();
 
 	},
@@ -42,7 +44,7 @@ const ffWrapper = {
 		const checkFFOpen = "ps aux | grep firefox";
 
 		var isFFOpen = exec( checkFFOpen , { silent:true , async: false } );
-		if ( isFFOpen.stderr.length > 1 ) { wcl( "ERROR --> Could not Locate FF Binary" ); return null; }
+		if ( isFFOpen.stderr.length > 1 ) { CLog1( "ERROR --> Could not Locate FF Binary" ); return null; }
 		
 		isFFOpen = isFFOpen.stdout.split("\n");
 
@@ -50,18 +52,18 @@ const ffWrapper = {
 			var wT = isFFOpen[i].split(" ");
 			if ( wT[wT.length-1] === ffBinaryLocation1 ) {
 				ffWrapper.instancePID = wT[1].toString();
-				//wcl( "is OPEN" );
+				//CLog1( "is OPEN" );
 				ffWrapper.binaryOpen = true;
 				return true;
 			}
 			else if ( ( wT[wT.length-3] + " " + wT[wT.length-2] + " " + wT[wT.length-1] ) === ffBinaryLocation2 ){
 				ffWrapper.instancePID = wT[1].toString();
-				//wcl( "is OPEN" );
+				//CLog1( "is OPEN" );
 				ffWrapper.binaryOpen = true;
 				return true;
 			}
 		}
-		//wcl( "is CLOSED" );
+		//CLog1( "is CLOSED" );
 		ffWrapper.binaryOpen = false;
 		return false;
 
@@ -69,16 +71,16 @@ const ffWrapper = {
 
 	launchFF_Rewrite: function() {
 		var wEX1 = exec( "node " + launchFFPath , { silent:true , async: false });
-		if ( wEX1.stderr.length > 1 ) { wcl( "ERROR --> Could not Launch FF Binary" ); return null; }
-		wcl( "Launched Firefox" );
+		if ( wEX1.stderr.length > 1 ) { CLog1( "ERROR --> Could not Launch FF Binary" ); return null; }
+		CLog1( "Launched Firefox" );
 	},
 
 	launchFF: async function( wEnsureOpen ) {
 
 		if ( !wEnsureOpen ) {
 			var wEX1 = exec( "node " + launchFFPath , {silent:true , async: false });
-			if ( wEX1.stderr.length > 1 ) { wcl( "ERROR --> Could not Launch FF Binary" ); return null; }
-			wcl( "Launched Firefox" );
+			if ( wEX1.stderr.length > 1 ) { CLog1( "ERROR --> Could not Launch FF Binary" ); return null; }
+			CLog1( "Launched Firefox" );
 		}
 		
 		if ( ffWrapper.binaryOpen != true ) {
@@ -107,8 +109,8 @@ const ffWrapper = {
 	terminateFF: function() {
 		if ( !ffWrapper.binaryOpen ) { return; }
 		var wEX2 = exec( "sudo pkill -9 firefox" , { silent: true ,  async: false } );
-		if ( wEX2.stderr.length > 1 ) { wcl( "ERROR --> Could not Terminate FF Binary" ); return null; }
-		wcl( "Killed Firefox" );
+		if ( wEX2.stderr.length > 1 ) { CLog1( "ERROR --> Could not Terminate FF Binary" ); return null; }
+		CLog1( "Killed Firefox" );
 	},	
 
 	openNewTab: function( w_URL ) {
@@ -116,7 +118,7 @@ const ffWrapper = {
 		const openNewTab = 'firefox -new-tab ' + escaped;
 		var wResult = exec( openNewTab , { silent: true , async: false } );
 		ffWrapper.stagedLink = null;
-		if ( wResult.stderr != null && wResult.stderr.length > 1 ) { wcl( wResult.stderr ); return null; }
+		if ( wResult.stderr != null && wResult.stderr.length > 1 ) { CLog1( wResult.stderr ); return null; }
 	},
 
 	youtubeFullScreen: function() {
