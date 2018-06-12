@@ -13,12 +13,10 @@ module.exports.wSleep = W_SLEEP;
 const MonthNames = [ "JAN" , "FEB" , "MAR" , "APR" , "MAY" , "JUN" , "JUL" , "AUG" , "SEP" , "OCT" , "NOV" , "DEC" ];
 function GET_NOW_TIME() {
 	const today = new Date();
-	
 	var day = today.getDate();
 	if ( parseInt( day ) < 10 ) { day = "0" + day; }
 	const month = MonthNames[ today.getMonth() ];
 	const year = today.getFullYear();
-
 	var hours = today.getHours();
 	if ( parseInt( hours ) < 10 ) { hours = "0" + hours; }
 	var minutes = today.getMinutes();
@@ -26,8 +24,9 @@ function GET_NOW_TIME() {
 	var seconds = today.getSeconds();
 	if ( parseInt( seconds ) < 10 ) { seconds = "0" + seconds; }
 	var milliseconds = today.getMilliseconds();
-	if ( parseInt( milliseconds ) < 10 ) { milliseconds = "00" + milliseconds; }
-	else if ( parseInt( milliseconds ) < 100 ) { milliseconds = "0" + milliseconds; }
+	const mi = parseInt( milliseconds );
+	if ( mi < 10 ) { milliseconds = "00" + milliseconds; }
+	else if ( mi < 100 ) { milliseconds = "0" + milliseconds; }
 	return day + month + year + " @ " + hours + ":" + minutes + ":" + seconds + "." + milliseconds;
 }
 module.exports.time = GET_NOW_TIME;

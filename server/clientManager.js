@@ -27,7 +27,7 @@ async function wSendButtonPressNotification( wButtonNum ) {
 			}
 		}
 	}
-	require( "./discordManager.js" ).log( ( now_time + " === " + BTN_MAP[ wButtonNum ][ "name" ] ) );
+	//require( "./discordManager.js" ).log( ( now_time + " === " + BTN_MAP[ wButtonNum ][ "name" ] ) );
 }
 
 async function wPressButtonMaster( wButtonNum , wOptions , wMasterClose ) {
@@ -50,14 +50,16 @@ async function wPressButtonMaster( wButtonNum , wOptions , wMasterClose ) {
 		if ( wMasterClose ) { await require( "./utils/generic.js" ).closeEverything(); }
 		else { await require( "./utils/generic.js" ).closeCommon(); }
 		return;
-	}	
+	}
 	var launching_fp = null;
 	if ( BTN_MAP[ wButtonNum ][ "state" ] || BTN_MAP[ wButtonNum ][ "session" ] ) {
 		if ( BTN_MAP[ wButtonNum ][ "session" ] ) {
 			launching_fp = path.join( __dirname , "SESSIONS" ,  BTN_MAP[ wButtonNum ][ "session" ] + ".js" );
+			CLog1( "LAUNCHING SESSION ---> " + BTN_MAP[ wButtonNum ][ "session" ] );
 		}
 		else {
 			launching_fp = path.join( __dirname , "STATES" ,  BTN_MAP[ wButtonNum ][ "state" ] + ".js" );
+			CLog1( "LAUNCHING STATE ---> " + BTN_MAP[ wButtonNum ][ "state" ] );
 		}
 		if ( launching_fp === cached_launching_fp ) {
 			if ( wOptions ) {
@@ -70,14 +72,12 @@ async function wPressButtonMaster( wButtonNum , wOptions , wMasterClose ) {
 		}
 		if ( CURRENT_STATE ) {
 			if ( CURRENT_STATE !== null ) {
-				CLog1( "stopping CURRENT_STATE" ); 
+				CLog1( "stopping CURRENT_STATE --> " + CURRENT_STATE );
 				await CURRENT_STATE.stop(); 
 				await wSleep( 1000 );
 			}
 		}
-		require( "./utils/cecClientManager.js" ).activate();		
-		CLog1( "LAUNCHING STATE--->" );
-		CLog1( launching_fp );
+		require( "./utils/cecClientManager.js" ).activate();	
 		try { delete require.cache[ CURRENT_STATE ]; }
 		catch ( e ) {}
 		CURRENT_STATE = null;
