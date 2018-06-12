@@ -103,6 +103,9 @@ const SCHEDULE_MAN 		= require( "./scheduleManager.js" );
 
 ( async ()=> {
 	CLog1( "Initializing stuff" );
+	await require( "./discordManager.js" ).intitialize();
+	await wSleep( 2000 );
+	CLog1( "LOADED Discord-Client" );		
 	await require( "./localMediaManager.js" ).initialize();
 	await require( "./YOUTUBE/standard.js" ).update();
 	CLog1( "we are done with Initialization" );

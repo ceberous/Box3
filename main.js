@@ -69,9 +69,9 @@ function SEND_STAGED_WS_MESSAGE() {
 	server = require( "http" ).createServer( app );
 	wss = new WebSocket.Server({ server });
 
-	await require( "./server/discordManager.js" ).intitialize();
-	await require( "./server/utils/generic.js" ).wSleep( 2000 );
-	wcl( "LOADED Discord-Client" );	
+	// await require( "./server/discordManager.js" ).intitialize();
+	// await require( "./server/utils/generic.js" ).wSleep( 2000 );
+	// wcl( "LOADED Discord-Client" );	
 
 	clientManager = await require("./server/clientManager.js");
 	wcl( "LOADED ClientManager" );
