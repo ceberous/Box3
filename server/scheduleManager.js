@@ -2,14 +2,13 @@ const path = require("path");
 const schedule = require( "node-schedule" );
 const RU = require( "./utils/redis_Utils.js" );
 
-const colors	= require( "colors" );
-
 const wButtonMaster = require( "./clientManager.js" ).pressButtonMaster;
 
 var CLogPrefix = "[SCHEDULE_MAN] --> ";
-function wcl( wSTR ) { console.log( colors.yellow.bgGreen( CLogPrefix + wSTR ) ); }
-const DiscordLog = require( "./discordManager.js" ).log;
-function CLog( wSTR ) { wcl( wSTR ); DiscordLog( CLogPrefix + wSTR ); }
+var CLogColorConfig = [ "yellow" , "bgGreen" ];
+const CLog = require( "./server/utils/generic.js" ).clog;
+function CLog1( wSTR ) { CLog( wSTR , CLogColorConfig , CLogPrefix ); }
+
 
 var SCHEDULE = STATE_TRANSITIONS = UPDATE_JOBS = null;
 var ACTIVE_SCHEDULES = [];
@@ -37,18 +36,18 @@ var ACTIVE_SCHEDULES = [];
 							for ( var i = 0; i < answers.length; ++i ) {
 								if ( answers[ i ] !== STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] ) {
 									AllConditionsMet = false;
-									CLog( answers[ i ] + " !== " + STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] );
+									CLog1( answers[ i ] + " !== " + STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] );
 								}
 							}
 						}
 					}
 				}
 				if ( AllConditionsMet ) {
-					CLog( "starting scheduled job --> " + job );
+					CLog1( "starting scheduled job --> " + job );
 					wButtonMaster( STATE_TRANSITIONS[ job ][ "state" ] , STATE_TRANSITIONS[ job ][ "stateOptions" ] );
 				}
 				else {
-					CLog( "conditions not met for --> " + job );
+					CLog1( "conditions not met for --> " + job );
 				}
 			})});
 		}
@@ -64,7 +63,7 @@ var ACTIVE_SCHEDULES = [];
 							for ( var i = 0; i < answers.length; ++i ) {
 								if ( answers[ i ] !== STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] ) {
 									AllConditionsMet = false;
-									CLog( answers[ i ] + " !== " + STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] );
+									CLog1( answers[ i ] + " !== " + STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] );
 								}
 							}
 						}
@@ -74,7 +73,7 @@ var ACTIVE_SCHEDULES = [];
 					wButtonMaster( 6 );
 				}
 				else { 
-					CLog( "conditions not met for --> " + job );
+					CLog1( "conditions not met for --> " + job );
 				}
 			})});
 		}
@@ -97,7 +96,7 @@ var ACTIVE_SCHEDULES = [];
 							for ( var i = 0; i < answers.length; ++i ) {
 								if ( answers[ i ] !== UPDATE_JOBS[ job ][ "startConditions" ][ wConditions[ i ] ] ) {
 									AllConditionsMet = false;
-									CLog( answers[ i ] + " !== " + UPDATE_JOBS[ job ][ "startConditions" ][ wConditions[ i ] ] );
+									CLog1( answers[ i ] + " !== " + UPDATE_JOBS[ job ][ "startConditions" ][ wConditions[ i ] ] );
 								}
 							}
 						}
@@ -112,10 +111,10 @@ var ACTIVE_SCHEDULES = [];
 					else {
 						require( B_PATH )();
 					}
-					CLog( "Running Scheduled FN --> " + B_PATH + " --> " + functionName );
+					CLog1( "Running Scheduled FN --> " + B_PATH + " --> " + functionName );
 				}
 				else {
-					CLog( "conditions not met for --> " + job );
+					CLog1( "conditions not met for --> " + job );
 				}
 			})});
 		}

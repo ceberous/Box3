@@ -83,7 +83,7 @@ mopidy.on( "event:trackPlaybackStarted" , async function ( wEvent ) {
 
 mopidy.on( "event:playbackStateChanged" , async function ( wEvent ) {
 	await sleep( 3000 );
-	await RU.setKey( "MOPIDY.STATE" , wEvent.new_state );
+	await RU.setKey( RC.STATE , wEvent.new_state.toUpperCase() );
 	wcl( "PLAYBACK --> CHANGED --> " );
 	console.log( wEvent );
 });

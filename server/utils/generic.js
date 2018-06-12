@@ -1,5 +1,7 @@
 const request = require( "request" );
 require( "shelljs/global" );
+const colors = require("colors");
+
 const StatusKeys = require( "../CONSTANTS/redis.js" ).STATUS;
 
 function W_SLEEP( ms ) { return new Promise( resolve => setTimeout( resolve , ms ) ); }
@@ -22,6 +24,24 @@ function GET_NOW_TIME() {
 	return day + month + year + " @ " + hours + ":" + minutes;
 }
 module.exports.time = GET_NOW_TIME;
+
+function COMMON_LOG( wSTR , wColorsConfig , wPrefix ) {
+	const now_time = GET_NOW_TIME();
+	wSTR = now_time + " = ";
+	if ( wPrefix ) { wSTR = wPrefix + wSTR; }
+	if ( wColorsConfig ) {
+		if ( wColorsConfig.length > 0 ) {
+			if ( wColorsConfig.length === 2 ) {
+				console.log( colors[ wColorsConfig[ 0 ] ][ wColorsConfig[ 1 ] ]( wSTR ) );
+			}
+			else {
+				console.log( colors[ wColorsConfig[ 0 ] ]( wSTR ) );
+			}
+		}
+	}
+	DiscordLog( wSTR );	
+}
+module.exports.clog = COMMON_LOG;
 
 function FIX_PATH_SPACE( wFP ) {
 	var fixSpace = new RegExp( " " , "g" );

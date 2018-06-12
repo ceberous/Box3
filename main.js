@@ -18,7 +18,12 @@ const ip = require("ip");
 
 const WebSocket = require( "ws" );
 
-function wcl( wSTR ) { console.log( colors.green.bgBlack( "[MAIN] --> " + wSTR ) ); }
+var CLogPrefix = "[MAIN] --> ";
+var CLogColorConfig = [ "green" , "bgBlack" ];
+function wcl( wSTR ) { console.log( colors.green.bgBlack( CLogPrefix + wSTR ) ); }
+const CLog = require( "./server/utils/generic.js" ).clog;
+function CLog1( wSTR ) { CLog( wSTR , CLogColorConfig , CLogPrefix ); }
+
 const wsleep = require( "./server/utils/generic.js" ).wSleep;
 
 // Need to Switch Client Stuff to this -->
@@ -39,6 +44,7 @@ function SEND_STAGED_WS_MESSAGE() {
 	return new Promise( async function( resolve , reject ) {
 		try {
 			var STAGED_FF_CLIENT_TASK = await require( "./server/utils/generic.js" ).getStagedFFClientTask( true );
+			CLog1( "Sending Staged FF Client Task to Websocket Clients = " + STAGED_FF_CLIENT_TASK );
 			wss.clients.forEach( function each( ws ) {
 				ws.send( STAGED_FF_CLIENT_TASK );
 			});
@@ -100,8 +106,6 @@ function SEND_STAGED_WS_MESSAGE() {
 	});
 
 	await require( "./server/utils/generic.js" ).getStatusReport();
-	wcl( "SERVER READY" );
-	const now_time = require( "./server/utils/generic.js" ).time();
-	await require( "./server/discordManager.js" ).log( now_time + " === Server Online" );
+	CLog1( "Server Online" );
 
 })();
