@@ -3,9 +3,13 @@ const schedule = require( "node-schedule" );
 const RU = require( "./utils/redis_Utils.js" );
 
 const colors	= require( "colors" );
-function wcl( wSTR ) { console.log( colors.yellow.bgGreen( "[SCHEDULE_MAN] --> " + wSTR ) ); }
 
 const wButtonMaster = require( "./clientManager.js" ).pressButtonMaster;
+
+var CLogPrefix = "[SCHEDULE_MAN] --> ";
+function wcl( wSTR ) { console.log( colors.yellow.bgGreen( CLogPrefix + wSTR ) ); }
+const DiscordLog = require( "./discordManager.js" ).log;
+function CLog( wSTR ) { wcl( wSTR ); DiscordLog( CLogPrefix + wSTR ); }
 
 var SCHEDULE = STATE_TRANSITIONS = UPDATE_JOBS = null;
 var ACTIVE_SCHEDULES = [];
@@ -33,23 +37,18 @@ var ACTIVE_SCHEDULES = [];
 							for ( var i = 0; i < answers.length; ++i ) {
 								if ( answers[ i ] !== STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] ) {
 									AllConditionsMet = false;
-									wcl( "condition not met !!!" );
-									const s1 = answers[ i ] + " !== " + STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ];
-									wcl( s1 );
-									await require( "./discordManager.js" ).log( s1 );
+									CLog( answers[ i ] + " !== " + STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] );
 								}
 							}
 						}
 					}
 				}
 				if ( AllConditionsMet ) {
-					wcl( "starting scheduled job" );
-					await require( "./discordManager.js" ).log( "starting scheduled job --> " + job );
+					CLog( "starting scheduled job --> " + job );
 					wButtonMaster( STATE_TRANSITIONS[ job ][ "state" ] , STATE_TRANSITIONS[ job ][ "stateOptions" ] );
 				}
 				else {
-					wcl( "conditions not met for scheduled task" );
-					await require( "./discordManager.js" ).log( "conditions not met for --> " + job );
+					CLog( "conditions not met for --> " + job );
 				}
 			})});
 		}
@@ -61,15 +60,11 @@ var ACTIVE_SCHEDULES = [];
 					if ( Object.keys( STATE_TRANSITIONS[ job ][ "stopConditions" ] ).length > 0 ) {
 						var wConditions = Object.keys( STATE_TRANSITIONS[ job ][ "stopConditions" ] );
 						var answers = await RU.getMultiKeys( ...wConditions );						
-						console.log( answers );
 						if ( answers ) {
 							for ( var i = 0; i < answers.length; ++i ) {
 								if ( answers[ i ] !== STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] ) {
 									AllConditionsMet = false;
-									wcl( "condition not met !!!" );
-									const s2 = answers[ i ] + " !== " + STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ];
-									wcl( s2 );
-									await require( "./discordManager.js" ).log( s2 );
+									CLog( answers[ i ] + " !== " + STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] );
 								}
 							}
 						}
@@ -79,8 +74,7 @@ var ACTIVE_SCHEDULES = [];
 					wButtonMaster( 6 );
 				}
 				else { 
-					wcl( "conditions not met for scheduled task" );
-					await require( "./discordManager.js" ).log( "conditions not met for --> " + job );
+					CLog( "conditions not met for --> " + job );
 				}
 			})});
 		}
@@ -103,31 +97,25 @@ var ACTIVE_SCHEDULES = [];
 							for ( var i = 0; i < answers.length; ++i ) {
 								if ( answers[ i ] !== UPDATE_JOBS[ job ][ "startConditions" ][ wConditions[ i ] ] ) {
 									AllConditionsMet = false;
-									console.log( "condition not met !!!" );
-									const s3 = answers[ i ] + " !== " + UPDATE_JOBS[ job ][ "startConditions" ][ wConditions[ i ] ];
-									wcl( s3 );
-									await require( "./discordManager.js" ).log( s3 );
+									CLog( answers[ i ] + " !== " + UPDATE_JOBS[ job ][ "startConditions" ][ wConditions[ i ] ] );
 								}
 							}
 						}
 					}
 				}
 				if ( AllConditionsMet ) {
-					wcl( "all conditions were met !!!" );
 					// run update function()
 					const B_PATH = path.join( __dirname , ...UPDATE_JOBS[ job ][ "functionPath" ] );
-					wcl( "starting scheduled update func()" );
-					wcl( B_PATH );
 					if ( UPDATE_JOBS[ job ][ "functionName" ] ) {
 						require( B_PATH )[ UPDATE_JOBS[ job ][ "functionName" ] ]();
 					}
 					else {
 						require( B_PATH )();
 					}
+					CLog( "Running Scheduled FN --> " + B_PATH + " --> " + functionName );
 				}
 				else {
-					wcl( "condition not met for scheduled task" );
-					await require( "./discordManager.js" ).log( "conditions not met for --> " + job );
+					CLog( "conditions not met for --> " + job );
 				}
 			})});
 		}
