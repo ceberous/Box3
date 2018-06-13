@@ -77,6 +77,7 @@ async function wPressButtonMaster( wButtonNum , wOptions , wMasterClose ) {
 				await wSleep( 1000 );
 			}
 		}
+		
 		require( "./utils/cecClientManager.js" ).activate();	
 		try { delete require.cache[ CURRENT_STATE ]; }
 		catch ( e ) {}
