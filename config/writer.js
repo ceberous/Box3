@@ -115,9 +115,17 @@ const YOUTUBE = {
 			{
 				name : "" ,
 				id: "UCKbVtAdWFNw5K7u2MZMLKIw"
-			} ,		
+			} ,
 		] ,
 		BLACKLIST: [] ,
+	}
+	RELAX: {
+		FOLLOWERS: [
+			{
+				name : "Relax Daily" ,
+				id: "UCc9EzBNAtdnNiDrMw5CAxUw"
+			}
+		]
 	}
 };
 
@@ -152,11 +160,6 @@ function UPDATE_HAND_WRITTEN_CONFIG() {
 }
 module.exports.updateHandWrittenConfig  = UPDATE_HAND_WRITTEN_CONFIG;
 
-// if ( !module.parent ) {
-// 	UPDATE_HAND_WRITTEN_CONFIG();
-// }
-UPDATE_HAND_WRITTEN_CONFIG();
-
 function GET_CONFIG_FILE( wConfigName ) {
 	if ( !CONFIG_FILE_VAR_MAP[ wConfigName ] ) { return "No Config File By That Name"; }
 	var config_file = null;
@@ -174,3 +177,9 @@ function UPDATE_CONFIG_FILE( wConfigName , wConfig ) {
 	fs.writeFileSync( CONFIG_FILE_MAP[ wConfigName ] , JSON.stringify( wConfig , null , 4 ) );
 }
 module.exports.updateConfigFile = UPDATE_CONFIG_FILE;
+
+
+// if ( !module.parent ) {
+// 	UPDATE_HAND_WRITTEN_CONFIG();
+// }
+UPDATE_HAND_WRITTEN_CONFIG();

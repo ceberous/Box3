@@ -1,21 +1,18 @@
 process.on( "unhandledRejection" , function( reason , p ) {
-    console.error( reason, "Unhandled Rejection at Promise" , p );
-    console.trace();
+	console.error( reason, "Unhandled Rejection at Promise" , p );
+	console.trace();
 });
 process.on( "uncaughtException" , function( err ) {
-    console.error( err , "Uncaught Exception thrown" );
-    console.trace();
+	console.error( err , "Uncaught Exception thrown" );
+	console.trace();
 });
-require("shelljs/global");
-const fs = require("fs");
-const path = require("path");
-const colors = require("colors");
-const wEmitter = new (require("events").EventEmitter);
+const fs = require( "fs" );
+const path = require( "path" );
+const colors = require( "colors" );
+const wEmitter = new ( require( "events" ).EventEmitter );
 module.exports.wEmitter = wEmitter;
-
 const port = process.env.PORT || 6969;
-const ip = require("ip");
-
+const ip = require( "ip" );
 const WebSocket = require( "ws" );
 
 var CLogPrefix = "[MAIN] --> ";
@@ -23,7 +20,6 @@ var CLogColorConfig = [ "green" , "bgBlack" ];
 function wcl( wSTR ) { console.log( colors.green.bgBlack( CLogPrefix + wSTR ) ); }
 const CLog = require( "./server/utils/generic.js" ).clog;
 function CLog1( wSTR ) { CLog( wSTR , CLogColorConfig , CLogPrefix ); }
-
 const wsleep = require( "./server/utils/generic.js" ).wSleep;
 
 // Need to Switch Client Stuff to this -->
@@ -69,10 +65,6 @@ function SEND_STAGED_WS_MESSAGE() {
 	server = require( "http" ).createServer( app );
 	wss = new WebSocket.Server({ server });
 
-	// await require( "./server/discordManager.js" ).intitialize();
-	// await require( "./server/utils/generic.js" ).wSleep( 2000 );
-	// wcl( "LOADED Discord-Client" );	
-
 	clientManager = await require("./server/clientManager.js");
 	wcl( "LOADED ClientManager" );
 
@@ -82,10 +74,9 @@ function SEND_STAGED_WS_MESSAGE() {
 		await require( "./server/websocketManager.js" ).broadcast( wss , wMessage , wOptions )
 	});
 	module.exports.sendStagedWebSocketMessage = SEND_STAGED_WS_MESSAGE;
-	
 	wcl( "LOADED FF-Client Web-Socket Stuff" );
-
-	server.listen( port , async function() {
+	
+	server.listen( port , function() {
 		const localIP = ip.address();
 		wcl( "\tServer Started on :" );
 		wcl( "\thttp://" + localIP + ":" + port );
@@ -94,16 +85,16 @@ function SEND_STAGED_WS_MESSAGE() {
 	});
 
 	process.on( "unhandledRejection" , async function( reason , p ) {
-	    await require( "./server/discordManager.js" ).error( reason );
+		await require( "./server/discordManager.js" ).error( reason );
 	});
 	process.on( "uncaughtException" , async function( err ) {
-	    await require( "./server/discordManager.js" ).error( err );
+		await require( "./server/discordManager.js" ).error( err );
 	});
 
 	process.on( "SIGINT" , async function () {
 		//wEmitter.emit( "closeEverything" );
 		await clientManager.pressButtonMaster( 6 , {} , true );
-		process.exit(1);
+		process.exit( 1 );
 	});
 
 	await require( "./server/utils/generic.js" ).getStatusReport();
