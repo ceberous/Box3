@@ -144,7 +144,7 @@ function REINITIALIZE_MOUNT_POINT() {
 				//await wSleep( 2000 );
 				await REBUILD_REDIS_MOUNT_POINT_REFERENCE( wLiveMountPoint );
 				await RU.setKey( RC.MOUNT_POINT , wLiveMountPoint );
-			}		
+			}
 			resolve( wLiveMountPoint );
 		}
 		catch( error ) { console.log( error ); reject( error ); }

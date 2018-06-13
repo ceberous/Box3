@@ -9,10 +9,12 @@
 	} ,
 	"max_restarts": 10 ,    
     "env": {
-      "COMMON_VARIABLE": "true"
+      "COMMON_VARIABLE": "true",
+      "DISPLAY": ":0"
     },
     "env_production" : {
-      "NODE_ENV": "production"
+      "NODE_ENV": "production",
+      "DISPLAY": ":0"
     }
   }],
   "deploy" : {
@@ -25,7 +27,8 @@
       "pre-deploy-local" : "echo 'This is a local executed command'" ,
       "post-deploy" : "npm install && pm2 startOrRestart ecosystem.json --env production",
       "env"  : {
-        "NODE_ENV": "production"
+        "NODE_ENV": "production",
+        "DISPLAY": ":0"
       }
     }
   }
