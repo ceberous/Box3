@@ -118,7 +118,7 @@ const YOUTUBE = {
 			} ,
 		] ,
 		BLACKLIST: [] ,
-	}
+	} ,
 	RELAX: {
 		FOLLOWERS: [
 			{
