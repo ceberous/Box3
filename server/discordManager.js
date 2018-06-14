@@ -250,6 +250,7 @@ function INITIALIZE() {
 					if( args.length === 0 ) {
 						// Start Currated As Default
 						require( "./clientManager.js" ).pressButtonMaster( "15" );
+						return;
 					}
 					var final_options = { position: "FOREGROUND" };
 					if ( args[ 1 ].indexOf( "watch?v=" ) !== -1 ) {
@@ -283,6 +284,20 @@ function INITIALIZE() {
 					reactionButtonTimeout: 0
 				});
 				discordBot.registerCommandAlias( "yt" , "youtube" );
+
+				youtubeCommand.registerSubcommand( "watch" , async ( msg , args ) => {
+					if( args.length === 0 ) {
+						return "failed";
+					}
+					var final_options = { position: "FOREGROUND" , single_id: args[ 1 ] };
+					require( "./clientManager.js" ).pressButtonMaster( "17" , final_options );	
+					return;
+				}, {
+					description: "Watch YT Link",
+					fullDescription: "Watch YT Link",
+					usage: "<text>" ,
+					reactionButtonTimeout: 0
+				});				
 
 				youtubeCommand.registerSubcommand( "followers" , async ( msg , args ) => {
 					if( args.length === 0 ) {
