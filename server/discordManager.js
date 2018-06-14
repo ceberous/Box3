@@ -289,7 +289,7 @@ function INITIALIZE() {
 					if( args.length === 0 ) {
 						return "failed";
 					}
-					var final_options = { position: "FOREGROUND" , single_id: args[ 1 ] };
+					var final_options = { position: "FOREGROUND" , mode: "SINGLE" , single_id: args[ 1 ] };
 					require( "./clientManager.js" ).pressButtonMaster( "17" , final_options );	
 					return;
 				}, {
