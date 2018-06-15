@@ -45,6 +45,8 @@ function PREVIOUS( wOptions ) {
 			//wcl( "next() --> LiveConfig = " );
 			//console.log( wOptions );
 
+			if ( !wOptions.mount_point ) { wOptions.mount_point = await RU.getKey( RC.MOUNT_POINT ); }
+
 			// Check if Genre Fresh
 			var lastPlayed = await GetLastPlayedGlobal();
 			if ( !lastPlayed ) { //console.log( "genre is FRESH !!" );
@@ -153,6 +155,7 @@ function NEXT( wOptions , wSkipping ) {
 			if ( !wOptions ) { wOptions = await GetLiveConfig(); }
 			//wcl( "next() --> LiveConfig = " );
 			//console.log( wOptions );
+			if ( !wOptions.mount_point ) { wOptions.mount_point = await RU.getKey( RC.MOUNT_POINT ); }
 
 			// Check if Genre Fresh
 			var lastPlayed = await GetLastPlayedGlobal();
