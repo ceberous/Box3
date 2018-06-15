@@ -253,26 +253,26 @@ function INITIALIZE() {
 						return;
 					}
 					var final_options = { position: "FOREGROUND" };
-					if ( args[ 1 ].indexOf( "watch?v=" ) !== -1 ) {
+					if ( args[ 0].indexOf( "watch?v=" ) !== -1 ) {
 						final_options.mode = "SINGLE";
-						final_options.single_id = args[ 1 ].split( "watch?v=" )[ 1 ];
+						final_options.single_id = args[ 0 ].split( "watch?v=" )[ 1 ];
 					}
-					else if ( args[ 1 ].indexOf( "playlist?list=" ) !== -1 ) {
+					else if ( args[ 0 ].indexOf( "playlist?list=" ) !== -1 ) {
 						final_options.mode = "PLAYLIST_OFFICIAL";
-						final_options.playlist_id = args[ 1 ].split( "playlist?list=" )[ 1 ];
+						final_options.playlist_id = args[ 0 ].split( "playlist?list=" )[ 1 ];
 					}
-					else if ( args[ 1 ].indexOf( "youtu.be/" ) !== -1 ) {
+					else if ( args[ 0 ].indexOf( "youtu.be/" ) !== -1 ) {
 						final_options.mode = "SINGLE";
-						final_options.single_id = args[ 1 ].split( "youtu.be/" )[ 1 ];
+						final_options.single_id = args[ 0 ].split( "youtu.be/" )[ 1 ];
 					}						
 					else {
-						if ( args[ 1 ].length > 15 ) {
+						if ( args[ 0 ].length > 15 ) {
 							final_options.mode = "PLAYLIST_OFFICIAL";
-							final_options.playlist_id = args[ 1 ];
+							final_options.playlist_id = args[ 0 ];
 						}
 						else {
 							final_options.mode = "SINGLE";
-							final_options.single_id = args[ 1 ];
+							final_options.single_id = args[ 0 ];
 						}
 					}
 					require( "./clientManager.js" ).pressButtonMaster( "17" , final_options );				
@@ -284,20 +284,6 @@ function INITIALIZE() {
 					reactionButtonTimeout: 0
 				});
 				discordBot.registerCommandAlias( "yt" , "youtube" );
-
-				youtubeCommand.registerSubcommand( "watch" , async ( msg , args ) => {
-					if( args.length === 0 ) {
-						return "failed";
-					}
-					var final_options = { position: "FOREGROUND" , mode: "SINGLE" , single_id: args[ 1 ] };
-					require( "./clientManager.js" ).pressButtonMaster( "17" , final_options );	
-					return;
-				}, {
-					description: "Watch YT Link",
-					fullDescription: "Watch YT Link",
-					usage: "<text>" ,
-					reactionButtonTimeout: 0
-				});				
 
 				youtubeCommand.registerSubcommand( "followers" , async ( msg , args ) => {
 					if( args.length === 0 ) {

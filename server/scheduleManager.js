@@ -36,7 +36,7 @@ var ACTIVE_SCHEDULES = [];
 							for ( var i = 0; i < answers.length; ++i ) {
 								if ( answers[ i ] !== STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] ) {
 									AllConditionsMet = false;
-									CLog1( answers[ i ] + " !== " + STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] );
+									CLog1( wConditions[ i ] + " === " + answers[ i ] + " !== " + STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] );
 								}
 							}
 						}
@@ -63,7 +63,7 @@ var ACTIVE_SCHEDULES = [];
 							for ( var i = 0; i < answers.length; ++i ) {
 								if ( answers[ i ] !== STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] ) {
 									AllConditionsMet = false;
-									CLog1( answers[ i ] + " !== " + STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] );
+									CLog1( wConditions[ i ] + " === " + answers[ i ] + " !== " + STATE_TRANSITIONS[ job ][ "startConditions" ][ wConditions[ i ] ] );
 								}
 							}
 						}
