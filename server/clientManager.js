@@ -52,13 +52,16 @@ async function wPressButtonMaster( wButtonNum , wOptions , wMasterClose ) {
 		return;
 	}
 	var launching_fp = null;
+	var launching_state_name = null;
 	if ( BTN_MAP[ wButtonNum ][ "state" ] || BTN_MAP[ wButtonNum ][ "session" ] ) {
 		if ( BTN_MAP[ wButtonNum ][ "session" ] ) {
 			launching_fp = path.join( __dirname , "SESSIONS" ,  BTN_MAP[ wButtonNum ][ "session" ] + ".js" );
+			launching_state_name = BTN_MAP[ wButtonNum ][ "session" ];
 			CLog1( "LAUNCHING SESSION ---> " + BTN_MAP[ wButtonNum ][ "session" ] );
 		}
 		else {
 			launching_fp = path.join( __dirname , "STATES" ,  BTN_MAP[ wButtonNum ][ "state" ] + ".js" );
+			launching_state_name = BTN_MAP[ wButtonNum ][ "state" ];
 			CLog1( "LAUNCHING STATE ---> " + BTN_MAP[ wButtonNum ][ "state" ] );
 		}
 		if ( launching_fp === cached_launching_fp ) {
@@ -85,6 +88,7 @@ async function wPressButtonMaster( wButtonNum , wOptions , wMasterClose ) {
 		await wSleep( 1000 );
 		CURRENT_STATE = require( launching_fp );
 		cached_launching_fp = launching_fp;
+
 		if ( wOptions.mode ) { cached_mode = wOptions.mode; }
 		await CURRENT_STATE.start( wOptions );
 	}

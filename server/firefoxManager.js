@@ -19,6 +19,8 @@ function wsleep( ms ) { return new Promise( resolve => setTimeout( resolve , ms 
 
 // about:config
 // browser.sessionstore.resume_from_crash = false
+
+const SET_DISPLAY = "export DISPLAY=:0; ";
 const ffWrapper = {
 	
 	binaryOpen: false,
@@ -43,7 +45,7 @@ const ffWrapper = {
 		const ffBinaryLocation2 = "/bin/sh -c firefox";
 		const checkFFOpen = "ps aux | grep firefox";
 
-		var isFFOpen = exec( checkFFOpen , { silent:true , async: false } );
+		var isFFOpen = exec( SET_DISPLAY + checkFFOpen , { silent:true , async: false } );
 		if ( isFFOpen.stderr.length > 1 ) { CLog1( "ERROR --> Could not Locate FF Binary" ); return null; }
 		
 		isFFOpen = isFFOpen.stdout.split("\n");
@@ -70,7 +72,7 @@ const ffWrapper = {
 	},
 
 	launchFF_Rewrite: function() {
-		var wEX1 = exec( "node " + launchFFPath , { silent:true , async: false });
+		var wEX1 = exec( SET_DISPLAY + "node " + launchFFPath , { silent:true , async: false });
 		if ( wEX1.stderr.length > 1 ) { CLog1( "ERROR --> Could not Launch FF Binary" ); return null; }
 		CLog1( "Launched Firefox" );
 	},
@@ -78,7 +80,7 @@ const ffWrapper = {
 	launchFF: async function( wEnsureOpen ) {
 
 		if ( !wEnsureOpen ) {
-			var wEX1 = exec( "node " + launchFFPath , {silent:true , async: false });
+			var wEX1 = exec( SET_DISPLAY + "node " + launchFFPath , {silent:true , async: false });
 			if ( wEX1.stderr.length > 1 ) { CLog1( "ERROR --> Could not Launch FF Binary" ); return null; }
 			CLog1( "Launched Firefox" );
 		}
@@ -116,7 +118,7 @@ const ffWrapper = {
 	openNewTab: function( w_URL ) {
 		const escaped = shellescape( [ w_URL ] );
 		const openNewTab = 'firefox -new-tab ' + escaped;
-		var wResult = exec( openNewTab , { silent: true , async: false } );
+		var wResult = exec( SET_DISPLAY + openNewTab , { silent: true , async: false } );
 		ffWrapper.stagedLink = null;
 		if ( wResult.stderr != null && wResult.stderr.length > 1 ) { CLog1( wResult.stderr ); return null; }
 	},

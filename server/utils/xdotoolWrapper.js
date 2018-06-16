@@ -37,12 +37,12 @@ function sleep( ms ) { return new Promise( resolve => setTimeout( resolve , ms )
 
 // [XDO_TOOL_MAN] --> mouse double clicked
 
-
+const SET_DISPLAY = "export DISPLAY=:0; ";
 
 function wGetWindowIDFromName( wName ) {
 	try {
 		var findName = 'xdotool search --name "' + wName + '"';
-		var wWindowID = exec( findName , { silent: true , async: false } );
+		var wWindowID = exec( SET_DISPLAY + findName , { silent: true , async: false } );
 		if ( !wWindowID ) { return null; }
 		if ( wWindowID.stderr ) { return null; }
 		if ( wWindowID.stderr.length > 1 ) { wcl( "ERROR --> Could not Wrap FF Window" ); return null; }
@@ -76,14 +76,14 @@ function  wEnsureWindowNameIsReady( wName ) {
 
 function wActivateWindowID( wID ) {
 	var activateID = 'xdotool windowactivate ' + wID;
-	var wActivate = exec( activateID , { silent: true ,  async: false });
+	var wActivate = exec( SET_DISPLAY + activateID , { silent: true ,  async: false });
 	if ( wActivate.stderr.length > 1 ) { wcl( "ERROR --> Could not Activate Window ID" ); return null; }
 	else { return true; }
 }
 
 function wSetWindowIDFocus( wID ) {
 	var focusID = 'xdotool windowactivate ' + wID;
-	var wFocus = exec( focusID , { silent: true ,  async: false });
+	var wFocus = exec( SET_DISPLAY + focusID , { silent: true ,  async: false });
 	if ( wFocus.stderr.length > 1 ) { wcl( "ERROR --> Could not Focus Window ID" ); return null; }
 	wcl( "window activated" );
 	return true;
@@ -91,7 +91,7 @@ function wSetWindowIDFocus( wID ) {
 
 function wWindowMove( wID , wScreenNum ) {
 	var windowMove = 'xdotool getactivewindow windowmove %' + wScreenNum  + ' 0 0';
-	var wExec1 = exec( windowMove , { silent: true ,  async: false } );
+	var wExec1 = exec( SET_DISPLAY + windowMove , { silent: true ,  async: false } );
 	if ( wExec1.stderr.length > 1 ) { wcl( "ERROR --> Could not Move Window ID" ); wcl( wExec1.stderr );return null; }
 	else { return true; }
 }
@@ -101,7 +101,7 @@ function wSetWindowIDFullScreen( wID , wScreenNum ) {
 	if ( wScreenNum ) { setToFullScreen = setToFullScreen + ' ' + wID + ' 100% 100%'; }
 	else { setToFullScreen = setToFullScreen + wID + ' 100% 100%';  }
 
-	var wSetFull = exec( setToFullScreen , { silent: true , async: false });
+	var wSetFull = exec( SET_DISPLAY + setToFullScreen , { silent: true , async: false });
 	if ( wSetFull.stderr.length > 1 ) { wcl( "ERROR --> Could not set Window ID to Full Screen" ); wcl( wSetFull.stderr ); return null; }
 	else { return true; }
 }
@@ -131,18 +131,18 @@ function wMoveMouseToCenterOfWindow() {
 
 function wMouseLeftClick() {
 	var click = "xdotool click 1";
-	exec( click , { silent: true , async: false } );
+	exec( SET_DISPLAY + click , { silent: true , async: false } );
 }
 
 function wMouseDoubleClick() {
 	var click = "xdotool click --repeat 2 --delay 200 1";
-	exec( click , { silent: true , async: false } );
+	exec( SET_DISPLAY + click , { silent: true , async: false } );
 	wcl( "mouse double clicked" );
 }
 
 function wPressKeyboardKey( wKey ) {
 	var fKeyPress = 'xdotool key ' + wKey.toString();
-	exec( fKeyPress , { silent: true , async: false } );
+	exec( SET_DISPLAY + fKeyPress , { silent: true , async: false } );
 	wcl( wKey + " key pressed" );
 }
 
