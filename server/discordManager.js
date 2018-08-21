@@ -617,7 +617,7 @@ function INITIALIZE() {
 
 				var urlFullScreenCommand = discordBot.registerCommand( "url" , ( msg , args ) => {
 					if( args.length === 1 ) {
-						require( "./firefoxManager.js" ).terminateFFWithClient();
+						require( "./utils/generic.js" ).osCommand( "sudo pkill -9 firefox" );
 						const url = args.join(" ");
 						console.log( "Opening URL --> " + url );
 						require( "./utils/generic.js" ).osCommand( "/usr/local/bin/openURLFullScreen " + url );
