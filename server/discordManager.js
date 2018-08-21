@@ -614,6 +614,18 @@ function INITIALIZE() {
 					reactionButtonTimeout: 0
 				});
 				discordBot.registerCommandAlias( "tv" , "tvpower" );
+
+				var urlFullScreenCommand = discordBot.registerCommand( "url" , ( msg , args ) => {
+					if( args.length === 1 ) {
+						require( "./utils/generic.js" ).osCommand( "/usr/local/bin/openURLFullScreen " + args[ 1 ] );
+					}
+					return;
+				}, {
+					description: "Open URL Full Screen",
+					fullDescription: "Open URL Full Screen",
+					usage: "<text>" ,
+					reactionButtonTimeout: 0
+				});
 			// ========================================================================================
 			// Misc====================================================================================
 
