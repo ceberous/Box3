@@ -4,9 +4,9 @@ const path = require( "path" );
 
 const GENERIC = {
 	MEDIA_MOUNT_POINT: {
-		//UUID: "2864E38A64E358D8" ,
+		UUID: "2864E38A64E358D8" ,
 		//LOCAL_PATH: "/home/morpheous/TMP2/EMULATED_MOUNT_PATH" ,
-		LOCAL_PATH: "/home/morpheous/TMP2/EMULATED_MOUNT_POINT/MEDIA_MANAGER/" ,
+		//LOCAL_PATH: "/home/morpheous/TMP2/EMULATED_MOUNT_POINT/MEDIA_MANAGER/" ,
 		//UUID: "B40C6DD40C6D9262" , // Toshiba 1tb
 	}
 };

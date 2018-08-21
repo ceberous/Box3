@@ -88,8 +88,8 @@ async function wPressButtonMaster( wButtonNum , wOptions , wMasterClose ) {
 		await wSleep( 1000 );
 		CURRENT_STATE = require( launching_fp );
 		cached_launching_fp = launching_fp;
-
 		if ( wOptions.mode ) { cached_mode = wOptions.mode; }
+		//RU.setKey(  )
 		await CURRENT_STATE.start( wOptions );
 	}
 	else { if ( CURRENT_STATE ) { CLog1( "STATE ACTION --> " + BTN_MAP[ wButtonNum ][ "label" ] + "()" ); CURRENT_STATE[ BTN_MAP[ wButtonNum ][ "label" ] ](); } }
