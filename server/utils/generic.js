@@ -217,6 +217,7 @@ function OS_COMMAND( wTask ) {
 	return new Promise( function( resolve , reject ) {
 		try {
 			var result = null;
+			console.log( "EXEC --> " + wTask );
 			var x1 = exec( wTask , { silent: true , async: false } );
 			if ( x1.stderr ) { result = x1.stderr }
 			else { result = x1.stdout.trim() }

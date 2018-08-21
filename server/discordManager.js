@@ -617,7 +617,10 @@ function INITIALIZE() {
 
 				var urlFullScreenCommand = discordBot.registerCommand( "url" , ( msg , args ) => {
 					if( args.length === 1 ) {
-						require( "./utils/generic.js" ).osCommand( "/usr/local/bin/openURLFullScreen " + args[ 1 ] );
+						await require( "./firefoxManager.js" ).terminateFFWithClient();
+						const url = args.join(" ");
+						console.log( "Opening URL --> " + url );
+						require( "./utils/generic.js" ).osCommand( "/usr/local/bin/openURLFullScreen " + url );
 					}
 					return;
 				}, {
