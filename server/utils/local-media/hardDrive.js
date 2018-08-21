@@ -139,8 +139,8 @@ function REINITIALIZE_MOUNT_POINT() {
 				else { wcl( "We Were Not Told Where to Find any Local Media" ); resolve( "no_local_media" ); return; }
 				const dirExists = FS.existsSync( wLiveMountPoint );
 				if ( !dirExists ) { wcl( "Local Media Folder Doesn't Exist" ); resolve( "no_local_media" ); return; }
-				const isEmpty = await exfs.isEmpty( wLiveMountPoint );
-				if ( isEmpty ) { wcl( "Local Media Folder is Empty" ); resolve( "no_local_media" ); return; }
+				//const isEmpty = await exfs.isEmpty( wLiveMountPoint );
+				//if ( isEmpty ) { wcl( "Local Media Folder is Empty" ); resolve( "no_local_media" ); return; }
 				// Cleanse and Prepare Mount_Point
 				await RU.deleteMultiplePatterns( [ ( RC.BASE + "*" ) , "HARD_DRIVE.*" , "LAST_SS.LOCAL_MEDIA.*" ] );
 				//await wSleep( 2000 );
