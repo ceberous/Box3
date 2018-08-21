@@ -80,7 +80,7 @@ async function BUILD_HD_REF( wMountPoint ) {
 module.exports.findAndMountUSB_From_UUID = FIND_USB_STORAGE_PATH_FROM_UUID;
 module.exports.buildHardDriveReference = BUILD_HD_REF;
 
-const redis = require( "../redisManager.js" ).redis;
+//const redis = require( "../redisManager.js" ).redis;
 const RU = require( "../redis_Utils.js" );
 const RC = require( "../../CONSTANTS/redis.js" ).LOCAL_MEDIA;
 
@@ -100,13 +100,15 @@ function REBUILD_REDIS_MOUNT_POINT_REFERENCE( wMountPoint ) {
 				const LSS_SK_T = LSS_SK_B + "TOTAL";
 				const LSS_SK_C = LSS_SK_B + "CURRENT_INDEX";
 				await RU.setMulti( [ [ "set" , LSS_SK_T , x1Shows.length ] ,  [ "set" , LSS_SK_C , 0 ] ]);
-				redis.rpush.apply( [ LSS_SK_U ].concat( x1Shows ) );
+				//redis.rpush.apply( [ LSS_SK_U ].concat( x1Shows ) );
+				await RU.setListFromArray( LSS_SK_U , x1Shows );
 				for ( var wShow in x1[ wGenre ] ) { // Each Show in Genre
 					const wShow_R_KEY = RC.HD_BASE + wGenre + ".FP." + wShow;
 					for ( var j = 0; j < x1[ wGenre ][ wShow ].length; ++j ) {
 						const wSeason_R_KEY = wShow_R_KEY + "." + j.toString();
 						if ( x1[ wGenre ][ wShow ][ j ].length > 0 ) { // <-- Has Episodes Stored in Season Folders
-							redis.rpush.apply( [ wSeason_R_KEY ].concat( x1[ wGenre ][ wShow ][ j ] ) );
+							//redis.rpush.apply( [ wSeason_R_KEY ].concat( x1[ wGenre ][ wShow ][ j ] ) );
+							await RU.setListFromArray( wSeason_R_KEY , x1[ wGenre ][ wShow ][ j ] );
 						}
 					}
 				}
